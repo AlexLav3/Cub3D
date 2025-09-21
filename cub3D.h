@@ -29,8 +29,8 @@ typedef struct g_player
 	float		pos_y;
 	int			moving;
 	int			direction;
-	float       angle;
-    float       speed;
+	float		angle;
+	float		speed;
 }				t_player;
 
 typedef struct g_map
@@ -41,7 +41,8 @@ typedef struct g_map
 	char		*texture;
 	char		*player;
 	int			walkable;
-
+	int			count;
+	char		**copy;
 }				t_map;
 
 typedef struct g_cub3D
@@ -61,14 +62,17 @@ int				map_error(char *argv, int fd);
 
 //initializing & starting values
 int				mlx_set(t_cub3D *Cub3D);
-int				init_player(t_player *player);
+int				init_player(t_cub3D *Cub3D);
+
+//map
+int				load_map(t_map *map);
+void			set_textures(t_cub3D *cub3D);
 
 //window actions
 int				ft_key_press(int keycode, void *v);
 int				ft_close(t_cub3D *cub3D);
 
 //player actions
-void	move_player(t_player *player, float x_factor, float y_factor);
-
+void			move_player(t_player *player, float x_factor, float y_factor);
 
 #endif
