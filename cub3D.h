@@ -13,13 +13,24 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# define PI 3.14159265
+# define TILE_SIZE 64
+# define PLAYER_HEIGHT 32
+
+//find the X11 equivalent later
+# define S 115
+# define D 100
+# define W 119
+# define A 97
+
 typedef struct g_player
 {
-	int			pos_x;
-	int			pos_y;
+	float		pos_x;
+	float		pos_y;
 	int			moving;
 	int			direction;
-
+	float       angle;
+    float       speed;
 }				t_player;
 
 typedef struct g_map
@@ -55,5 +66,9 @@ int				init_player(t_player *player);
 //window actions
 int				ft_key_press(int keycode, void *v);
 int				ft_close(t_cub3D *cub3D);
+
+//player actions
+void	move_player(t_player *player, float x_factor, float y_factor);
+
 
 #endif

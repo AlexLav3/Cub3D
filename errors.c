@@ -16,7 +16,7 @@ static int	is_config_line(char *line)
 static int	valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == ' ' || c == '\n');
+		|| c == ' ' || c == '\n' || c == '\t');
 }
 
 int	map_error(char *argv, int fd)
@@ -30,7 +30,8 @@ int	map_error(char *argv, int fd)
 	{
 		if (is_config_line(line) || line[0] == '\n')
 			free(line);
-		break ;
+		else
+			break ;
 	}
 	while ((line = get_next_line(fd)))
 	{
