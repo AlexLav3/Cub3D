@@ -64,7 +64,6 @@ typedef struct g_map
 	int					count;
 	char				**copy;
 	t_cub3D				*cub3D;
-
 }						t_map;
 
 typedef struct g_cub3D
@@ -86,6 +85,7 @@ int						map_error(char *argv, int fd);
 //initializing & starting values
 int						mlx_set(t_cub3D *Cub3D);
 int						init_player(t_cub3D *Cub3D);
+void					extract_color(char *line, int *colors);
 
 //map
 int						load_map(t_map *map);
@@ -93,7 +93,7 @@ void					set_textures_col(t_map *map, int op, char *path);
 void					create_copy(t_map *map);
 int						is_config_line(char *line);
 void					set_colors(t_map *map, int op, char *line);
-int						configs(t_map *map);
+void					configs(t_map *map);
 //window actions
 int						ft_key_press(int keycode, void *v);
 int						ft_close(t_cub3D *cub3D);

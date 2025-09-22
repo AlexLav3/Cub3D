@@ -3,7 +3,7 @@ CC = cc -g
 OBJ_DIR = obj
 #CFLAGS = -Wall -Werror -Wextra 
 
-SOURCES = main.c init.c win_actions.c errors.c map.c
+SOURCES = main.c init.c win_actions.c errors.c map.c utils.c
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
 
 MLX_DIR = minilibx-linux

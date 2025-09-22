@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/22 17:30:19 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/09/22 19:55:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,45 +29,45 @@
 //check map
 //display textures as needed
 
-void	set_config(t_map *map, char *line)
+static int	set_config(t_map *map, char *line)
 {
-	if (ft_strncmp(line, "NO ", 3))
+	if (!ft_strncmp(line, "NO ", 3))
 		set_textures_col(map, NT, line + 3);
-	else if (ft_strncmp(line, "SO ", 3))
+	else if (!ft_strncmp(line, "SO ", 3))
 		set_textures_col(map, ST, line + 3);
-	else if (ft_strncmp(line, "WE ", 3))
+	else if (!ft_strncmp(line, "WE ", 3))
 		set_textures_col(map, WT, line + 3);
-	else if (ft_strncmp(line, "EA ", 3))
+	else if (!ft_strncmp(line, "EA ", 3))
 		set_textures_col(map, ET, line + 3);
-	else if (ft_strncmp(line, "F ", 2))
+	else if (!ft_strncmp(line, "F ", 2))
 		set_colors(map, F, line + 2);
-	else if (ft_strncmp(line, "C ", 2))
+	else if (!ft_strncmp(line, "C ", 2))
 		set_colors(map, C, line + 2);
+	return (1);
 }
 
-int	configs(t_map *map)
+void	configs(t_map *map)
 {
 	int	y;
-    
+
 	y = 0;
 	while (map->copy[y][0])
 	{
 		if (is_config_line(map->copy[y]) || map->copy[y][0] == '\n')
-        {
+		{
 			set_config(map, map->copy[y]);
-            y++;
-        }
+			y++;
+		}
 		else
 			break ;
 	}
-	return (1);
 }
 
 void	create_copy(t_map *map)
 {
 	int	fd;
 	int	y;
-    
+
 	y = 0;
 	fd = open(map->file, O_RDONLY);
 	if (fd < 0)
