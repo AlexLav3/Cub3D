@@ -1,6 +1,6 @@
 #include "cub3D.h"
 
-//can you use a file that does not have these? or should I throw error?
+//we can add a check for missing configs and colors 
 int	is_config_line(char *line)
 {
 	while (*line == ' ' || *line == '\t')

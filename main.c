@@ -6,12 +6,11 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:30 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/22 17:13:57 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/09/22 19:59:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
 
 int	main(int argc, char **argv)
 {
