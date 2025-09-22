@@ -6,11 +6,12 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:30 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/21 22:43:45 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/09/22 17:13:57 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
 
 int	main(int argc, char **argv)
 {
@@ -24,14 +25,17 @@ int	main(int argc, char **argv)
 	if (!tmap)
 		return (1);
 	cub3D.mlx = mlx_init(&cub3D);
+	if(!cub3D.mlx)
+		return 1;
 	tmap->file = argv[1];
 	if (!load_map(tmap))
 		return (free(tmap), 1);
 	cub3D.player = &player;
 	cub3D.map = tmap;
+	tmap->cub3D = &cub3D;
 	if (!mlx_set(&cub3D))
 		return (free(tmap), 1);
-	if (!init_player(&cub3D))
-		return (free(tmap), 1);
+	// if (!init_player(&cub3D))
+	// 	return (free(tmap), 1);
 	return (0);
 }

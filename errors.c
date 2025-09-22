@@ -1,6 +1,7 @@
 #include "cub3D.h"
 
-static int	is_config_line(char *line)
+//can you use a file that does not have these? or should I throw error?
+int	is_config_line(char *line)
 {
 	while (*line == ' ' || *line == '\t')
 		line++;

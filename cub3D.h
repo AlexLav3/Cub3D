@@ -23,56 +23,83 @@
 # define W 119
 # define A 97
 
+# define ST 1
+# define WT 2
+# define ET 3
+# define NT 4
+# define F 5
+# define C 6
+
+typedef struct g_cub3D	t_cub3D;
+
 typedef struct g_player
 {
-	float		pos_x;
-	float		pos_y;
-	int			moving;
-	int			direction;
-	float		angle;
-	float		speed;
-}				t_player;
+	float				pos_x;
+	float				pos_y;
+	int					moving;
+	int					direction;
+	float				angle;
+	float				speed;
+}						t_player;
 
 typedef struct g_map
 {
-	char		*file;
-	char		*floor;
-	char		*wall;
-	char		*texture;
-	char		*player;
-	int			walkable;
-	int			count;
-	char		**copy;
-}				t_map;
+	char				*file;
+
+	int					f_red;
+	int					f_green;
+	int					f_blue;
+	int					c_red;
+	int					c_green;
+	int					c_blue;
+
+	char				*N_text;
+	char				*S_text;
+	char				*E_text;
+	char				*W_text;
+
+	char				*texture;
+	char				*player;
+	int					walkable;
+	int					count;
+	char				**copy;
+	t_cub3D				*cub3D;
+
+}						t_map;
 
 typedef struct g_cub3D
 {
-	void		*mlx;
-	void		*win;
-	int			w_height;
-	int			w_width;
-	t_map		*map;
-	t_player	*player;
+	void				*mlx;
+	void				*win;
+	int					w_height;
+	int					w_width;
+	t_map				*map;
+	t_player			*player;
 
-}				t_cub3D;
+}						t_cub3D;
 
+//mlx_new_image(mlx, 128, 128);
 //error handling
-int				arg_error(int argc, char **argv);
-int				map_error(char *argv, int fd);
+int						arg_error(int argc, char **argv);
+int						map_error(char *argv, int fd);
 
 //initializing & starting values
-int				mlx_set(t_cub3D *Cub3D);
-int				init_player(t_cub3D *Cub3D);
+int						mlx_set(t_cub3D *Cub3D);
+int						init_player(t_cub3D *Cub3D);
 
 //map
-int				load_map(t_map *map);
-void			set_textures(t_cub3D *cub3D);
-
+int						load_map(t_map *map);
+void					set_textures_col(t_map *map, int op, char *path);
+void					create_copy(t_map *map);
+int						is_config_line(char *line);
+void					set_colors(t_map *map, int op, char *line);
+int						configs(t_map *map);
 //window actions
-int				ft_key_press(int keycode, void *v);
-int				ft_close(t_cub3D *cub3D);
+int						ft_key_press(int keycode, void *v);
+int						ft_close(t_cub3D *cub3D);
 
 //player actions
-void			move_player(t_player *player, float x_factor, float y_factor);
+void					move_player(t_player *player, float x_factor,
+							float y_factor);
 
 #endif
