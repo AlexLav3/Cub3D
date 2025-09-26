@@ -32,7 +32,10 @@ int	map_error(char *argv, int fd)
 		if (is_config_line(line) || line[0] == '\n')
 			free(line);
 		else
+		{
+			free(line);
 			break ;
+		}
 	}
 	while ((line = get_next_line(fd)))
 	{
@@ -45,7 +48,8 @@ int	map_error(char *argv, int fd)
 		}
 		free(line);
 	}
-	close(fd);
+	if(close(fd))
+		exit(EXIT_FAILURE);
 	if (error)
 		return (printf("wrong char in file\n"), 1);
 	return (0);
