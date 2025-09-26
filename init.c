@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/26 23:06:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/09/26 23:17:39 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	load_map(t_map *map)
 		line = get_next_line(fd);
 	}
 	if(close(fd))
-		exit(EXIT_FAILURE);
+		  perror("close");
 	map->count = count;
 	map->copy = malloc((count + 1) * sizeof(char *));
 	if (!map->copy)

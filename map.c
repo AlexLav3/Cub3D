@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/26 23:07:11 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/09/26 23:16:10 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ void	create_copy(t_map *map)
 			free(map->copy);
 			map->copy = NULL;
 			if(close(fd))	
-				exit(EXIT_FAILURE);
+				perror("close");
 			return ;
 		}
 		y++;
 	}
 	map->copy[y++] = NULL;
 	if(close(fd))	
-		exit(EXIT_FAILURE);
+		perror("close");
 }

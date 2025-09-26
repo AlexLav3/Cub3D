@@ -49,7 +49,7 @@ int	map_error(char *argv, int fd)
 		free(line);
 	}
 	if(close(fd))
-		exit(EXIT_FAILURE);
+		  perror("close");
 	if (error)
 		return (printf("wrong char in file\n"), 1);
 	return (0);
