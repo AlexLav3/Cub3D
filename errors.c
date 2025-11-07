@@ -19,7 +19,7 @@ static int	valid_map_char(char c)
 		|| c == ' ' || c == '\n' || c == '\t');
 }
 
-int	map_error(char *argv, int fd)
+int	map_error(int fd)
 {
 	char	*line;
 	int		i;
@@ -58,7 +58,7 @@ int	arg_error(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
 		return (printf("could not open file\n"), 1);
-	if (map_error(argv[1], fd))
+	if (map_error(fd))
 		return (1);
 	return (0);
 }
