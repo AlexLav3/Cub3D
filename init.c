@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/26 23:17:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:29:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	load_map(t_map *map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if(close(fd))
-		  perror("close");
+	if (close(fd))
+		perror("close");
 	map->count = count;
 	map->copy = malloc((count + 1) * sizeof(char *));
 	if (!map->copy)
@@ -44,7 +44,7 @@ int	load_map(t_map *map)
 	return (1);
 }
 
-int	init_player(t_cub3D *cub3D)
+int	init_player(t_cub3D *cub3D) //find position of player. Replace with "0" to put the correct texture over it
 {
 	int	x;
 	int	y;
@@ -72,10 +72,12 @@ int	init_player(t_cub3D *cub3D)
 
 int	mlx_set(t_cub3D *Cub3D)
 {
-	Cub3D->win = mlx_new_window(Cub3D->mlx, 200, 200, "cub3D"); //tmp win size
+	configs(Cub3D->map);
+	//sizem(Cub3D);
+	mlx_get_screen_size(Cub3D->mlx, &Cub3D->w_height, &Cub3D->w_width);
+	Cub3D->win = mlx_new_window(Cub3D->mlx, Cub3D->w_height, Cub3D->w_width, "cub3D"); //tmp win size
 	if (!Cub3D->win)
 		return (0);
-	configs(Cub3D->map);
 	test(Cub3D->map);
 	mlx_hook(Cub3D->win, 17, 0, ft_close, (void *)Cub3D);
 	mlx_hook(Cub3D->win, 2, 1L << 0, ft_key_press, (void *)Cub3D);
@@ -83,7 +85,7 @@ int	mlx_set(t_cub3D *Cub3D)
 	return (1);
 }
 
-void	set_textures_col(t_map *map, int op, char *path)
+void	set_textures_col(t_map *map, int op, char *path) //sets textures to mlx file to image based on the config file
 {
 	int	a;
 	int	len;
@@ -103,10 +105,10 @@ void	set_textures_col(t_map *map, int op, char *path)
 		map->W_text = mlx_xpm_file_to_image(map->cub3D->mlx, path, &a, &a);
 }
 
-void	set_colors(t_map *map, int op, char *line)
+void	set_colors(t_map *map, int op, char *line) //config colors
 {
 	int	colors[3];
-	
+
 	extract_color(line, colors);
 	if (op == F)
 	{
@@ -121,4 +123,3 @@ void	set_colors(t_map *map, int op, char *line)
 		map->c_blue = colors[2];
 	}
 }
-

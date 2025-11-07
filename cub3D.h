@@ -14,15 +14,18 @@
 # include <unistd.h>
 
 # define PI 3.14159265
-# define TILE_SIZE 64
-# define PLAYER_HEIGHT 32
+# define TILE_SIZE 30 // if we decide not to set it as a constant but based on the map+window size
+//tile_size can be put in a struct instead
+# define PLAYER_HEIGHT 32 //I supposed it would be needed for the height part of the field of view
+//#define FIELD_V 60 - 66 //for field of view once we decide
 
-//find the X11 equivalent later
+//find the X11 equivalent later (movement)
 # define S 115
 # define D 100
 # define W 119
 # define A 97
 
+///textures (south, weast, east, north, floor, ceiling)
 # define ST 1
 # define WT 2
 # define ET 3
@@ -32,20 +35,26 @@
 
 typedef struct g_cub3D	t_cub3D;
 
+typedef struct ray_cal 
+{
+	//variables for ray casting calculations etc
+} t_ray_cal;
+
 typedef struct g_player
 {
 	float				pos_x;
 	float				pos_y;
 	int					moving;
-	int					direction;
-	float				angle;
-	float				speed;
+	int					direction; //direction facing, may be not needed, idk.
+	float				angle; //angle that the player is facing(?) to which apply the field of view
+	float				speed; //movement speed
 }						t_player;
 
 typedef struct g_map
 {
 	char				*file;
 
+	//floor and ceiling colors based on config file
 	int					f_red;
 	int					f_green;
 	int					f_blue;
@@ -53,19 +62,22 @@ typedef struct g_map
 	int					c_green;
 	int					c_blue;
 
+	//textures
 	char				*N_text;
 	char				*S_text;
 	char				*E_text;
 	char				*W_text;
 
-	char				*texture;
-	char				*player;
-	int					walkable;
-	int					count;
-	char				**copy;
+	char				*texture; //this one may be not necessary
+	char				*player; //char that is equal to player initial position ("P") 
+	int					walkable; 
+	int					count; //lines count
+	char				**copy; 
+	int					conf_c; //ceiling rows
 	t_cub3D				*cub3D;
 }						t_map;
 
+//variables and pointers to struct needed for mlx
 typedef struct g_cub3D
 {
 	void				*mlx;

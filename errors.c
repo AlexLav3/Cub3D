@@ -1,6 +1,5 @@
 #include "cub3D.h"
 
-//we can add a check for missing configs and colors 
 int	is_config_line(char *line)
 {
 	while (*line == ' ' || *line == '\t')
@@ -27,16 +26,7 @@ int	map_error(char *argv, int fd)
 	int		error;
 
 	error = 0;
-	while ((line = get_next_line(fd)))
-	{
-		if (is_config_line(line) || line[0] == '\n')
-			free(line);
-		else
-		{
-			free(line);
-			break ;
-		}
-	}
+	line = config_l(fd);
 	while ((line = get_next_line(fd)))
 	{
 		i = 0;
@@ -49,7 +39,7 @@ int	map_error(char *argv, int fd)
 		free(line);
 	}
 	if(close(fd))
-		  perror("close");
+		perror("close");
 	if (error)
 		return (printf("wrong char in file\n"), 1);
 	return (0);

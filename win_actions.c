@@ -6,12 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:25 by elavrich          #+#    #+#             */
-/*   Updated: 2025/09/21 21:33:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/07 17:26:46 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
+//if this is not correct, ofc I can change it. 
 void	p_actions(int keycode, t_player *player)
 {
 	if (keycode == W)
