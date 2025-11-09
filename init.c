@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/07 17:29:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/09 23:40:53 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	load_map(t_map *map)
 	return (1);
 }
 
-int	init_player(t_cub3D *cub3D) //find position of player. Replace with "0" to put the correct texture over it
+int	init_player(t_cub3D *cub3D) //find position of player. Replace with "0" to put the correct color over it
 {
 	int	x;
 	int	y;
@@ -73,6 +73,8 @@ int	init_player(t_cub3D *cub3D) //find position of player. Replace with "0" to p
 int	mlx_set(t_cub3D *Cub3D)
 {
 	configs(Cub3D->map);
+	if(!walls_check(Cub3D->map))
+		return (printf("Not enclosed by walls\n"), 0);
 	//sizem(Cub3D);
 	mlx_get_screen_size(Cub3D->mlx, &Cub3D->w_height, &Cub3D->w_width);
 	Cub3D->win = mlx_new_window(Cub3D->mlx, Cub3D->w_height, Cub3D->w_width, "cub3D"); //tmp win size

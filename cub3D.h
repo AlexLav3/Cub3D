@@ -15,10 +15,10 @@
 
 # define PI 3.14159265
 # define TILE_SIZE 30
-	// if we decide not to set it as a constant but based on the map+window size
+// if we decide not to set it as a constant but based on the map+window size
 //tile_size can be put in a struct instead
 # define PLAYER_HEIGHT 32
-	//I supposed it would be needed for the height part of the field of view
+//I supposed it would be needed for the height part of the field of view
 //#define FIELD_V 60 - 66 //for field of view once we decide
 
 //find the X11 equivalent later (movement)
@@ -48,9 +48,9 @@ typedef struct g_player
 	float				pos_y;
 	int					moving;
 	int direction; //direction facing, may be not needed, idk.
-	float angle;  
-		//angle that the player is facing(?) to which apply the field of view
-	float speed;   //movement speed
+	float				angle;
+	//angle that the player is facing(?) to which apply the field of view
+	float speed; //movement speed
 }						t_player;
 
 typedef struct g_map
@@ -76,7 +76,7 @@ typedef struct g_map
 	int					walkable;
 	int count; //lines count
 	char				**copy;
-	int conf_c; //ceiling rows
+	int conf_c; //end of conf lines
 	t_cub3D				*cub3D;
 }						t_map;
 
@@ -110,6 +110,7 @@ int						is_config_line(char *line);
 void					set_colors(t_map *map, int op, char *line);
 void					configs(t_map *map);
 char					*config_l(int fd);
+int						walls_check(t_map *map);
 //window actions
 int						ft_key_press(int keycode, void *v);
 int						ft_close(t_cub3D *cub3D);

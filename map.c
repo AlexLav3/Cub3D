@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/07 17:28:00 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/09 23:41:41 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,51 @@ void	create_copy(t_map *map)
 		}
 		y++;
 	}
-	map->copy[y++] = NULL;
+	map->copy[y] = NULL;
 	if(close(fd))	
 		perror("close");
 }
 
-//To add here, check if it's enclosed by walls. 
+//this can be easily separated, first two loops are identical. 
+int walls_check(t_map *map)
+{
+	int rows = map->conf_c;
+	int i = 0;
+	while(map->copy[rows][i] == ' ') //skip initial spaces if any
+		i++;
+	while(map->copy[rows][i] != '\n') //first row
+	{
+		if(map->copy[rows][i] != '1')	
+			return 0;
+		i++;
+	}
+	i = 0;
+	while(map->copy[rows]) //find the boundary
+		rows++;
+	int last_row = rows -1;
+	while(map->copy[last_row][i]) //last row
+	{
+		while(map->copy[last_row][i] == ' ')
+			i++;
+		if(map->copy[last_row][i] != '1')	
+			return 0;
+		i++;
+	}
+	int middle = map->conf_c + 1;
+	i = 0;
+	while(middle < last_row)
+	{
+		while(map->copy[middle][i] == ' ')
+    		i++;
+		if(map->copy[middle][i] != '1')
+			return 0;
+		int j = ft_strlen(map->copy[middle]) - 1;
+		while(map->copy[middle][j] == ' ' || map->copy[middle][j] == '\n')
+    		j--;
+		if(map->copy[middle][j] != '1')
+    		return 0;
+		i = 0;
+		middle++;		
+	}
+	return 1;
+}
