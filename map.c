@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 00:07:21 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 00:18:13 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void	create_copy(t_map *map)
 		perror("close");
 }
 
-//this can be easily separated, first two loops are identical.
 int	walls_check(t_map *map)
 {
 	int	rows;
@@ -103,7 +102,7 @@ int	walls_check(t_map *map)
 	rows = map->conf_c;
 	if (!iter_rows(map, rows, 0, false))
 		return (0);
-	while (map->copy[rows]) //find the boundary
+	while (map->copy[rows])
 		rows++;
 	if (!iter_rows(map, rows - 1, 0, false))
 		return (0);
