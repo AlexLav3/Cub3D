@@ -10,6 +10,7 @@
 # include <X11/keysym.h>
 # include <math.h>
 # include <stdio.h>
+# include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -34,6 +35,9 @@
 # define NT 4
 # define F 5
 # define C 6
+
+# define F_L 7 //first and last row of map, for the walls check
+# define MID 8 //middle rows, also for walls check
 
 typedef struct g_cub3D	t_cub3D;
 
@@ -111,6 +115,7 @@ void					set_colors(t_map *map, int op, char *line);
 void					configs(t_map *map);
 char					*config_l(int fd);
 int						walls_check(t_map *map);
+int						iter_rows(t_map *map, int index, int iter,  bool middle);
 //window actions
 int						ft_key_press(int keycode, void *v);
 int						ft_close(t_cub3D *cub3D);
