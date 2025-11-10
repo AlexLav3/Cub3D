@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 19:33:31 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/10 19:53:50 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	configs(t_map *map)
 		else
 			break ;
 	}
+	map->conf_c = y;
 }
 
 void	create_copy(t_map *map)
