@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_movement_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:40:43 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 18:13:58 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/10 20:36:26 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,23 @@ int	rotate_player(t_cub3D *cub3D, float rotdir)
  * This function is called continuously by MLX
  * It checks for player input and re-renders if needed
  */
-int	game_loop(void *param)
-{
-	t_cub3D	*cub3D;
-	int		moved;
+// int	game_loop(void *param) //Alex: this function is unused so far, and I think unnecessary. (I can explain why if needed)
+// {
+// 	t_cub3D	*cub3D;
+// 	int		moved;
 
-	cub3D = (t_cub3D *)param;
-	// Check if player has any movement inputs
-	if (cub3D->player->move_x != 0 || cub3D->player->move_y != 0 
-		|| cub3D->player->rotate != 0)
-	{
-		// Process movement
-		moved = move_player(cub3D);
-		// Only re-render if player actually moved
-		if (moved)
-		{
-			render_3d_view(cub3D);
-		}
-	}
-	return (0);
-}
+// 	cub3D = (t_cub3D *)param;
+// 	// Check if player has any movement inputs
+// 	if (cub3D->player->move_x != 0 || cub3D->player->move_y != 0 
+// 		|| cub3D->player->rotate != 0)
+// 	{
+// 		// Process movement
+// 		moved = move_player(cub3D);
+// 		// Only re-render if player actually moved
+// 		if (moved)
+// 		{
+// 			render_3d_view(cub3D);
+// 		}
+// 	}
+// 	return (0);
+//} 
