@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:30 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/09 20:22:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 18:13:51 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ int	main(int argc, char **argv)
 	tmap->file = argv[1];
 	if (!load_map(tmap))
 		return (free(tmap), 1);
+	ft_memset(&player, 0, sizeof(t_player));
+	player.speed = MOVESPEED;
 	cub3D.player = &player;
+	cub3D.player->speed = 0.1;
 	cub3D.map = tmap;
 	tmap->cub3D = &cub3D;
 	if (!mlx_set(&cub3D))
 		return (free(tmap), 1);
-	// if (!init_player(&cub3D))
-	// 	return (free(tmap), 1);
 	return (0);
 }

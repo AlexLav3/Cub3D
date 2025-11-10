@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/09 23:40:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:25:11 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-static void	test(t_map *map)
-{
-	mlx_put_image_to_window(map->cub3D->mlx, map->cub3D->win, map->N_text, 2
-			* TILE_SIZE, 2 * TILE_SIZE);
-	printf("colors: %d, %d, %d\n", map->c_red, map->c_green, map->c_blue);
-}
 
 int	load_map(t_map *map)
 {
@@ -34,8 +27,8 @@ int	load_map(t_map *map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (close(fd))
-		perror("close");
+	if(close(fd))
+		  perror("close");
 	map->count = count;
 	map->copy = malloc((count + 1) * sizeof(char *));
 	if (!map->copy)
@@ -43,74 +36,150 @@ int	load_map(t_map *map)
 	create_copy(map);
 	return (1);
 }
+void	init_player_direction(t_cub3D *cub3D)
+{
+	t_player	*p;
 
-int	init_player(t_cub3D *cub3D) //find position of player. Replace with "0" to put the correct color over it
+	p = cub3D->player;
+	if (p->dir == 'N')
+	{
+		p->dir_x = 0;
+		p->dir_y = -1;
+		p->plane_x = 0.66;
+		p->plane_y = 0;
+	}
+	else if (p->dir == 'S')
+	{
+		p->dir_x = 0;
+		p->dir_y = 1;
+		p->plane_x = -0.66;
+		p->plane_y = 0;
+	}
+	else if (p->dir == 'E')
+	{
+		p->dir_x = 1;
+		p->dir_y = 0;
+		p->plane_x = 0;
+		p->plane_y = 0.66;
+	}
+	else if (p->dir == 'W')
+	{
+		p->dir_x = -1;
+		p->dir_y = 0;
+		p->plane_x = 0;
+		p->plane_y = -0.66;
+	}
+}
+
+int	init_player(t_cub3D *cub3D)
 {
 	int	x;
 	int	y;
 
 	y = 0;
-	x = 0;
 	while (cub3D->map->copy[y])
 	{
 		x = 0;
 		while (cub3D->map->copy[y][x])
 		{
-			if (cub3D->map->copy[y][x] == 'N')
+			if (cub3D->map->copy[y][x] == 'N' ||
+				cub3D->map->copy[y][x] == 'S' ||
+				cub3D->map->copy[y][x] == 'E' ||
+				cub3D->map->copy[y][x] == 'W')
 			{
+				cub3D->player->dir = cub3D->map->copy[y][x];
+				cub3D->player->pos_x = (float)x + 0.5;
+				cub3D->player->pos_y = (float)y + 0.5;
 				cub3D->map->copy[y][x] = '0';
-				cub3D->player->pos_x = x;
-				cub3D->player->pos_y = y;
+				init_player_direction(cub3D);
+				if (DEBUG_INIT)
+				{
+					printf("Player spawned at: (%.2f, %.2f)\n", 
+						cub3D->player->pos_x, cub3D->player->pos_y);
+					printf("Direction vector: (%.2f, %.2f)\n",
+						cub3D->player->dir_x, cub3D->player->dir_y);
+					printf("Map dimensions: %d lines\n", cub3D->map->count);
+				}
 				return (1);
 			}
 			x++;
 		}
 		y++;
 	}
-	return (0);
+	return (1);
 }
 
 int	mlx_set(t_cub3D *Cub3D)
 {
+	Cub3D->win = mlx_new_window(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
+	if (!Cub3D->win)
+		return (0);
+	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!Cub3D->img.img)
+		return (0);
+	Cub3D->img.addr = mlx_get_data_addr(Cub3D->img.img,
+		&Cub3D->img.bits_per_pixel,
+		&Cub3D->img.line_len,
+		&Cub3D->img.endian);
 	configs(Cub3D->map);
 	if(!walls_check(Cub3D->map))
 		return (printf("Not enclosed by walls\n"), 0);
-	//sizem(Cub3D);
-	mlx_get_screen_size(Cub3D->mlx, &Cub3D->w_height, &Cub3D->w_width);
-	Cub3D->win = mlx_new_window(Cub3D->mlx, Cub3D->w_height, Cub3D->w_width, "cub3D"); //tmp win size
-	if (!Cub3D->win)
+	if (!init_player(Cub3D))
 		return (0);
-	test(Cub3D->map);
+	render_3d_view(Cub3D);
 	mlx_hook(Cub3D->win, 17, 0, ft_close, (void *)Cub3D);
 	mlx_hook(Cub3D->win, 2, 1L << 0, ft_key_press, (void *)Cub3D);
 	mlx_loop(Cub3D->mlx);
 	return (1);
 }
 
-void	set_textures_col(t_map *map, int op, char *path) //sets textures to mlx file to image based on the config file
+void	set_textures_col(t_map *map, int op, char *path)
 {
-	int	a;
-	int	len;
+	int		width;
+	int		height;
+	int		len;
+	t_cub_img	*texture;
 
-	a = 200;
+	width = 64;
+	height = 64;
 	len = ft_strlen(path);
-	while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == ' ' || path[len
-			- 1] == '\t'))
+	
+	// Trim whitespace
+	while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == ' ' || 
+			path[len - 1] == '\t'))
 		path[--len] = '\0';
+	// Select which texture to load
 	if (op == NT)
-		map->N_text = mlx_xpm_file_to_image(map->cub3D->mlx, path, &a, &a);
+		texture = &map->N_text;
 	else if (op == ST)
-		map->S_text = mlx_xpm_file_to_image(map->cub3D->mlx, path, &a, &a);
+		texture = &map->S_text;
 	else if (op == ET)
-		map->E_text = mlx_xpm_file_to_image(map->cub3D->mlx, path, &a, &a);
+		texture = &map->E_text;
 	else if (op == WT)
-		map->W_text = mlx_xpm_file_to_image(map->cub3D->mlx, path, &a, &a);
+		texture = &map->W_text;
+	else
+		return;
+	
+	texture->img = mlx_xpm_file_to_image(map->cub3D->mlx, path, &width, &height);
+	if (!texture->img)
+	{
+		printf("Error: failed to load texture from '%s'\n", path);
+		return;
+	}
+	if (texture->img)
+	{
+		// Get the data address for direct pixel access
+		texture->addr = mlx_get_data_addr(texture->img, 
+			&texture->bits_per_pixel,
+			&texture->line_len, 
+			&texture->endian);
+	}
 }
 
-void	set_colors(t_map *map, int op, char *line) //config colors
+void	set_colors(t_map *map, int op, char *line)
 {
 	int	colors[3];
-
+	
 	extract_color(line, colors);
 	if (op == F)
 	{

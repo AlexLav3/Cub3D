@@ -1,5 +1,6 @@
 #include "cub3D.h"
 
+//we can add a check for missing configs and colors 
 int	is_config_line(char *line)
 {
 	while (*line == ' ' || *line == '\t')

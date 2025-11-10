@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 00:18:13 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:33:31 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,17 @@ void	configs(t_map *map)
 		else
 			break ;
 	}
-	map->conf_c = y;
 }
 
 void	create_copy(t_map *map)
 {
 	int	fd;
 	int	y;
+	int len;
 
+	len = 0;
 	y = 0;
+	map->width = 0; //new, initialize width for mmap
 	fd = open(map->file, O_RDONLY);
 	if (fd < 0)
 		return (free(map->copy));
@@ -82,14 +84,17 @@ void	create_copy(t_map *map)
 				free(map->copy[y]);
 			free(map->copy);
 			map->copy = NULL;
-			if (close(fd))
+			if(close(fd))	
 				perror("close");
 			return ;
 		}
+		len = ft_strlen(map->copy[y]);
+		if (len > map->width)
+			map->width = len;
 		y++;
 	}
-	map->copy[y] = NULL;
-	if (close(fd))
+	map->copy[y++] = NULL;
+	if(close(fd))	
 		perror("close");
 }
 
@@ -97,7 +102,6 @@ int	walls_check(t_map *map)
 {
 	int	rows;
 	int	middle;
-	int	j;
 
 	rows = map->conf_c;
 	if (!iter_rows(map, rows, 0, false))

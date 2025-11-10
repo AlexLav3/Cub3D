@@ -3,58 +3,109 @@
 /*                                                        :::      ::::::::   */
 /*   win_actions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:25 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/07 17:26:46 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 17:33:41 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-//if this is not correct, ofc I can change it. 
-void	p_actions(int keycode, t_player *player)
+int	ft_close(void *param)
+{
+	t_cub3D	*cub3D;
+
+	cub3D = (t_cub3D *)param;
+	
+	// Destroy textures if they were loaded
+	if (cub3D->map->N_text.img)
+		mlx_destroy_image(cub3D->mlx, cub3D->map->N_text.img);
+	if (cub3D->map->S_text.img)
+		mlx_destroy_image(cub3D->mlx, cub3D->map->S_text.img);
+	if (cub3D->map->E_text.img)
+		mlx_destroy_image(cub3D->mlx, cub3D->map->E_text.img);
+	if (cub3D->map->W_text.img)
+		mlx_destroy_image(cub3D->mlx, cub3D->map->W_text.img);
+	
+	// Destroy main image buffer
+	if (cub3D->img.img)
+		mlx_destroy_image(cub3D->mlx, cub3D->img.img);
+	
+	// Destroy window
+	if (cub3D->win)
+		mlx_destroy_window(cub3D->mlx, cub3D->win);
+	
+	// Free map data
+	if (cub3D->map && cub3D->map->copy)
+	{
+		int i = 0;
+		while (cub3D->map->copy[i])
+		{
+			free(cub3D->map->copy[i]);
+			i++;
+		}
+		free(cub3D->map->copy);
+	}
+	if (cub3D->map)
+		free(cub3D->map);
+	
+	// Destroy display (this also frees mlx pointer)
+	if (cub3D->mlx)
+		mlx_destroy_display(cub3D->mlx);
+	
+	exit(0);
+	return (0);
+}
+
+static void	handle_movement_keys(int keycode, t_player *p)
 {
 	if (keycode == W)
-		move_player(player, cos(player->angle), sin(player->angle));
+		p->move_y = 1;
 	else if (keycode == S)
-		move_player(player, -cos(player->angle), -sin(player->angle));
-	else if (keycode == D)
-		move_player(player, sin(player->angle), -cos(player->angle));
+		p->move_y = -1;
 	else if (keycode == A)
-		move_player(player, -sin(player->angle), cos(player->angle));
+		p->move_x = -1;
+	else if (keycode == D)
+		p->move_x = 1;
+}
+
+static void	handle_rotation_keys(int keycode, t_player *p)
+{
+	if (keycode == XK_Left)
+		p->rotate = -1;
 	else if (keycode == XK_Right)
-		player->angle += 0.05;
-	else if (keycode == XK_Left)
-		player->angle -= 0.05;
-	if (player->angle < 0)
-		player->angle += 2 * PI;
-	if (player->angle >= 2 * PI)
-		player->angle -= 2 * PI;
+		p->rotate = 1;
 }
 
-void	move_player(t_player *player, float x_factor, float y_factor)
-{
-	player->pos_x += x_factor * player->speed;
-	player->pos_y += y_factor * player->speed;
-}
-
-int	ft_close(t_cub3D *cub3D)
-{
-	if (cub3D->win && cub3D->mlx)
-		mlx_destroy_window(cub3D->mlx, cub3D->win);
-	exit(0);
-}
 int	ft_key_press(int keycode, void *v)
 {
 	t_cub3D	*cub3D;
 
 	cub3D = v;
-	if (keycode == XK_Escape || keycode == 3)
-	{
+	if (keycode == XK_Escape)
 		ft_close(cub3D);
-		return (0);
-	}
-	p_actions(keycode, cub3D->player);
+	handle_movement_keys(keycode, cub3D->player);
+	handle_rotation_keys(keycode, cub3D->player);
+	return (0);
+}
+
+static void	release_movement_keys(int keycode, t_player *p)
+{
+	if ((keycode == W && p->move_y == 1) || (keycode == S && p->move_y == -1))
+		p->move_y = 0;
+	if ((keycode == A && p->move_x == -1) || (keycode == D && p->move_x == 1))
+		p->move_x = 0;
+}
+
+int	ft_key_release(int keycode, void *v)
+{
+	t_cub3D	*cub3D;
+
+	cub3D = v;
+	release_movement_keys(keycode, cub3D->player);
+	if ((keycode == XK_Left && cub3D->player->rotate == -1) ||
+		(keycode == XK_Right && cub3D->player->rotate == 1))
+		cub3D->player->rotate = 0;
 	return (0);
 }

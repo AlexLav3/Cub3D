@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 00:17:17 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 19:31:12 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	extract_color(char *line, int *colors)
+void		extract_color(char *line, int *colors)
 {
 	int	i;
 	int	count;
@@ -33,7 +33,9 @@ void	extract_color(char *line, int *colors)
 		}
 		colors[count++] = val;
 		if (line[i] == ',')
+		{
 			i++;
+		}
 	}
 }
 
