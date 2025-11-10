@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2025/11/09 06:48:39 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/10 20:02:24 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int is_wall(t_map *map, int x, int y)
 	if (!map->copy[y] || x >= (int)ft_strlen(map->copy[y]))
 		return (1);
 	
-	// '1' is a wall, everything else is walkable
+	// '1' is a wall, everything else is walkable - Alex: I had the "is walkable" variable for this
 	return (map->copy[y][x] == '1');
 }
 
