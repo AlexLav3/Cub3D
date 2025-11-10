@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 07:29:25 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 12:59:18 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/10 20:38:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ void render_3d_view(t_cub3D *cub3D)
 		ray_dir_x = p->dir_x + p->plane_x * camera_x;
 		ray_dir_y = p->dir_y + p->plane_y * camera_x;
 		// Calculate angle from direction vector (for texture selection)
-		ray_angle = atan2(ray_dir_y, ray_dir_x);
+		ray_angle = atan2(ray_dir_y, ray_dir_x); //Alex: Fyi, this takes doubles as arguments not floats
 		// Cast the ray
 		ray = cast_single_ray(cub3D->player, cub3D->map, ray_angle);
 		// Calculate player's viewing angle for fisheye correction

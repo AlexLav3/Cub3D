@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   win_actions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:25 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 17:33:41 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/10 20:40:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ int	ft_close(void *param)
 	return (0);
 }
 
-static void	handle_movement_keys(int keycode, t_player *p)
+static int	handle_movement_keys(int keycode, t_player *p)
 {
+	if(keycode != W && keycode != S && keycode != A && keycode != D && keycode != XK_Left && keycode != XK_Right)
+		return 0;
 	if (keycode == W)
 		p->move_y = 1;
 	else if (keycode == S)
@@ -68,15 +70,13 @@ static void	handle_movement_keys(int keycode, t_player *p)
 		p->move_x = -1;
 	else if (keycode == D)
 		p->move_x = 1;
-}
-
-static void	handle_rotation_keys(int keycode, t_player *p)
-{
-	if (keycode == XK_Left)
+	else if (keycode == XK_Left)
 		p->rotate = -1;
 	else if (keycode == XK_Right)
 		p->rotate = 1;
+	return 1;
 }
+
 
 int	ft_key_press(int keycode, void *v)
 {
@@ -85,8 +85,11 @@ int	ft_key_press(int keycode, void *v)
 	cub3D = v;
 	if (keycode == XK_Escape)
 		ft_close(cub3D);
-	handle_movement_keys(keycode, cub3D->player);
-	handle_rotation_keys(keycode, cub3D->player);
+	if(handle_movement_keys(keycode, cub3D->player))
+	{
+		if(move_player(cub3D))
+			render_3d_view(cub3D);
+	}
 	return (0);
 }
 

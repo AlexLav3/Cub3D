@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 19:25:11 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/10 20:47:36 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int	mlx_set(t_cub3D *Cub3D)
 	render_3d_view(Cub3D);
 	mlx_hook(Cub3D->win, 17, 0, ft_close, (void *)Cub3D);
 	mlx_hook(Cub3D->win, 2, 1L << 0, ft_key_press, (void *)Cub3D);
+	mlx_hook(Cub3D->win, 3, 1L << 1, ft_key_release, (void *)Cub3D);
 	mlx_loop(Cub3D->mlx);
 	return (1);
 }
