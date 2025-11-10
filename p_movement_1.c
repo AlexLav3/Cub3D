@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:40:43 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 20:36:26 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 21:13:29 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,11 @@ static int	move_direction(t_cub3D *cub3D, float dir_x, float dir_y, float speed)
 		cub3D->player->pos_x + dir_x * speed,
 		cub3D->player->pos_y + dir_y * speed));
 }
-
-int	move_player(t_cub3D *cub3D)
+/*
+	if we want to keep this function like this, then I think p->move_y etc,
+	should be restored to 0 if the move is not "valid"
+*/
+int	move_player(t_cub3D *cub3D) 
 {
 	int			moved;
 	t_player	*p;

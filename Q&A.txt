@@ -1,0 +1,13 @@
+We can put questions, ideas, concerns in here, so we don't have to send 300 messages on slack. 
+
+Alex: It seems that the texture is being put with the wrong width, I can see the colors are from the texture, but it seems 
+overly "thin" if you get what I mean. 
+Also I was thinking what do we want to do with spaces, I think rendering them as walls makes more sense, 
+bc if there is a space in between the walls (that is allowed) we can't just have a random void or smt. It would seem like you can go there
+And it would look weird. 
+
+I fixed the movement - once you'd rotate, WASD keys would rotate instead of move. 
+I didn't find any seg faults, map validation seems okay for now. 
+
+N.B
+check comment on move_player

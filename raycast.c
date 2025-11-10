@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 20:02:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/10 21:07:02 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int is_wall(t_map *map, int x, int y)
 	if (!map->copy[y] || x >= (int)ft_strlen(map->copy[y]))
 		return (1);
 	
-	// '1' is a wall, everything else is walkable - Alex: I had the "is walkable" variable for this
+	// '1' is a wall, everything else is walkable - Alex: I had the "is walkable" variable for this (in case we will have doors, for example.)
 	return (map->copy[y][x] == '1');
 }
 
@@ -128,7 +128,7 @@ t_ray cast_single_ray(t_player *player, t_map *map, float ray_angle)
  * calculate_wall_height - Calculate screen height of wall slice
  * @distance: Distance from player to wall
  * 
- * Closer walls appear taller on screen.
+ * Closer walls appear taller on screen. Alex: I feel something is missing bc the width is fucked.
  * We use inverse proportion: height = constant / distance
  * 
  * Returns: Height in pixels
