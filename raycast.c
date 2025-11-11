@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2025/11/11 04:12:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/12 00:00:34 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,12 +141,11 @@ int calculate_wall_height(float distance)
 	int height;
 	
 	// Avoid division by zero
-	if (distance < 0.1)
-		distance = 0.1;
+	if (distance < 0.01)
+		distance = 0.01;
 	
-	// Calculate wall height (perspective projection)
-	// The constant (TILE_SIZE * SCREEN_HEIGHT) determines scaling
-	height = (int)((TILE_SIZE * WIN_HEIGHT) / distance);
+	// distance is in grid units 
+	height = (int)(WIN_HEIGHT / distance);
 	
 	// Clamp to reasonable values
 	if (height > WIN_HEIGHT * 3)

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 07:29:25 by javi              #+#    #+#             */
-/*   Updated: 2025/11/11 04:17:29 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/11 23:57:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,19 +200,26 @@ void render_3d_view(t_cub3D *cub3D) //why floats used and not double? float can 
 		ray_dir_x = p->dir_x + p->plane_x * camera_x;
 		ray_dir_y = p->dir_y + p->plane_y * camera_x;
 		// Calculate angle from direction vector (for texture selection)
-		ray_angle = atan2(ray_dir_y, ray_dir_x); //Alex: Fyi, this takes doubles as arguments not floats (and returns a double) - conversion issues?
-		// Cast the ray
+		ray_angle = atan2(ray_dir_y, ray_dir_x);
 		ray = cast_single_ray(cub3D->player, cub3D->map, ray_angle);
-		// Calculate player's viewing angle for fisheye correction
+			
+		// Calculate angle difference from camera center
 		float player_angle = atan2(p->dir_y, p->dir_x);
-		// Fix fisheye effect
-		perpendicular_distance = ray.distance * cos(ray_angle - player_angle);
+		float angle_diff = ray_angle - player_angle;
+			
+		// Normalize angle difference to [-π, π]
+		while (angle_diff > PI)
+			 angle_diff -= 2 * PI;
+		while (angle_diff < -PI) 
+			angle_diff += 2 * PI;
+
+		// Apply fisheye correction
+		perpendicular_distance = ray.distance * cos(angle_diff);
 		wall_height = calculate_wall_height(perpendicular_distance);
 		// Draw with texture
 		draw_textured_wall(cub3D, x, wall_height, ray);
 		x++;
 	}
-	// Display the rendered image - why image? what image? img.img is not initialized to an actual image - sry I don't get what this buffer is for
 	mlx_put_image_to_window(cub3D->mlx, cub3D->win, cub3D->img.img, 0, 0); 
 	render_minimap(cub3D);
 }
