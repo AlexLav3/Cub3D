@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 21:07:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/11 04:12:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int create_rgb(int r, int g, int b)
 {
+	// printf("r %d\n", r);
+	// printf("g %d\n", g);
+	// printf("b %d\n", b);
 	return (r << 16 | g << 8 | b);
 }
 
@@ -217,7 +220,7 @@ void draw_vertical_line(t_cub3D *cub3D, int x, int wall_height, int color)
 	if (end_y > WIN_HEIGHT)
 		end_y = WIN_HEIGHT;
 	
-	// Draw ceiling (above wall)
+	// Draw ceiling (above wall) 
 	y = 0;
 	while (y < start_y)
 	{

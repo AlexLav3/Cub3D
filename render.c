@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 07:29:25 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 20:38:02 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/11 04:17:29 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void draw_textured_wall(t_cub3D *cub3D, int x, int wall_height, t_ray ray)
 	texture = get_wall_texture(cub3D->map, ray);	
 	// Calculate wall boundaries
 	start_y = (WIN_HEIGHT / 2) - (wall_height / 2);
+	//printf("start_y: %d\n", start_y); //-600 from the start, something seems off.
 	end_y = start_y + wall_height;
 	// Calculate texture X coordinate
 	tex_x = calculate_texture_x(ray);	
@@ -139,8 +140,10 @@ void draw_textured_wall(t_cub3D *cub3D, int x, int wall_height, t_ray ray)
 		end_y = WIN_HEIGHT;
 	// Draw ceiling
 	y = 0;
+	//start_y = 100; //just for testing, as the while loop never happens at all otherwise (I wanted to see if any color was displayed, spoiler, yep.)
 	while (y < start_y)
 	{
+		//printf("this never happens");
 		my_mlx_pixel_put(&cub3D->img, x, y,
 			create_rgb(cub3D->map->c_red, cub3D->map->c_green, cub3D->map->c_blue));
 		y++;
@@ -157,8 +160,10 @@ void draw_textured_wall(t_cub3D *cub3D, int x, int wall_height, t_ray ray)
 	}
 	// Draw floor
 	y = end_y;
+	//y = 100; //again only for testing - renders at the top as ceiling, not bottom as floor.
 	while (y < WIN_HEIGHT)
 	{
+		//printf("hi\n");
 		my_mlx_pixel_put(&cub3D->img, x, y,
 			create_rgb(cub3D->map->f_red, cub3D->map->f_green, cub3D->map->f_blue));
 		y++;
@@ -171,9 +176,9 @@ void draw_textured_wall(t_cub3D *cub3D, int x, int wall_height, t_ray ray)
  * This function:
  * 1. Casts one ray per screen column (800 rays for 800 pixel width)
  * 2. Calculates the angle for each ray relative to player's view
- * 3. Draws each wall slice based on distance
+ * 3. Draws each wall slice based on distance - does it also change which slice of the texture?
  */
-void render_3d_view(t_cub3D *cub3D)
+void render_3d_view(t_cub3D *cub3D) //why floats used and not double? float can have issues rounding up/down
 {
 	int		x;
 	float	camera_x;       // X-coordinate in camera space (-1 to +1)
@@ -195,7 +200,7 @@ void render_3d_view(t_cub3D *cub3D)
 		ray_dir_x = p->dir_x + p->plane_x * camera_x;
 		ray_dir_y = p->dir_y + p->plane_y * camera_x;
 		// Calculate angle from direction vector (for texture selection)
-		ray_angle = atan2(ray_dir_y, ray_dir_x); //Alex: Fyi, this takes doubles as arguments not floats
+		ray_angle = atan2(ray_dir_y, ray_dir_x); //Alex: Fyi, this takes doubles as arguments not floats (and returns a double) - conversion issues?
 		// Cast the ray
 		ray = cast_single_ray(cub3D->player, cub3D->map, ray_angle);
 		// Calculate player's viewing angle for fisheye correction
@@ -207,7 +212,7 @@ void render_3d_view(t_cub3D *cub3D)
 		draw_textured_wall(cub3D, x, wall_height, ray);
 		x++;
 	}
-	// Display the rendered image
-	mlx_put_image_to_window(cub3D->mlx, cub3D->win, cub3D->img.img, 0, 0);
+	// Display the rendered image - why image? what image? img.img is not initialized to an actual image - sry I don't get what this buffer is for
+	mlx_put_image_to_window(cub3D->mlx, cub3D->win, cub3D->img.img, 0, 0); 
 	render_minimap(cub3D);
 }

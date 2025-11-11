@@ -47,7 +47,7 @@
 
 # define WIN_WIDTH 800  // Width of the game window
 # define WIN_HEIGHT 600 // Height of the game window
-# define FOV 0.66       // Field of view (radians)
+# define FOV 0.66       // Field of view (radians) - Alex: fyi I tried to change it and there was no difference whatsoever. 
 # define RAY_STEP 0.01  // How much we advance the ray each iteration
 # define MAX_DEPTH 20.0 // Maximum distance a ray can travel
 

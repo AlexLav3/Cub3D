@@ -9,5 +9,8 @@ And it would look weird.
 I fixed the movement - once you'd rotate, WASD keys would rotate instead of move. 
 I didn't find any seg faults, map validation seems okay for now. 
 
+Also, why are we using pixel put instead of putting each texture image? (as I read, pixel put is  not recommended for use) 
+and where to put it and if it's visible, should be doable anyway, no? 
+
 N.B
 check comment on move_player

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 20:47:36 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/11 04:08:33 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	mlx_set(t_cub3D *Cub3D)
 	Cub3D->win = mlx_new_window(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (!Cub3D->win)
 		return (0);
-	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT);
+	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT); //what is this for? there is no image (aside textures)
 	if (!Cub3D->img.img)
 		return (0);
 	Cub3D->img.addr = mlx_get_data_addr(Cub3D->img.img,
