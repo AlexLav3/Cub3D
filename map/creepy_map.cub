@@ -1,0 +1,15 @@
+NO ./textures_bloody/North.xpm
+SO ./textures_bloody/South.xpm
+WE ./textures_bloody/West.xpm
+EA ./textures_bloody/East.xpm
+
+F 151, 22, 23
+C 0,0,0
+
+11111111111
+10000000001
+10000000001
+1000N000001
+10000000001
+10000000001
+11111111111
