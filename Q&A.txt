@@ -11,6 +11,8 @@ Do you wanna work on this or should I? I should be going back to school next wee
 
 -Alex: sorry, I don't understand what you mean. Techically, I have the conf_c as like, when the actual map starts, so that we don't read the configuration lines as part of the map. 
 I already took care of that, if I understand you correctly. 
+Count is for the amount of lines to allocate for the copy, not the lines to read as actual map. I can add a variable as map->count - map-conf_c if needed, so we have the number of 
+actual map files in one variable. 
 
 Additionally, we have void configs() in map.c and char config_l() in utils.c, so we have to determine
 which one we should keep. 

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 07:29:25 by javi              #+#    #+#             */
-/*   Updated: 2025/11/11 23:57:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/13 20:31:54 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,8 @@ void draw_textured_wall(t_cub3D *cub3D, int x, int wall_height, t_ray ray)
 		end_y = WIN_HEIGHT;
 	// Draw ceiling
 	y = 0;
-	//start_y = 100; //just for testing, as the while loop never happens at all otherwise (I wanted to see if any color was displayed, spoiler, yep.)
 	while (y < start_y)
 	{
-		//printf("this never happens");
 		my_mlx_pixel_put(&cub3D->img, x, y,
 			create_rgb(cub3D->map->c_red, cub3D->map->c_green, cub3D->map->c_blue));
 		y++;
@@ -160,10 +158,8 @@ void draw_textured_wall(t_cub3D *cub3D, int x, int wall_height, t_ray ray)
 	}
 	// Draw floor
 	y = end_y;
-	//y = 100; //again only for testing - renders at the top as ceiling, not bottom as floor.
 	while (y < WIN_HEIGHT)
 	{
-		//printf("hi\n");
 		my_mlx_pixel_put(&cub3D->img, x, y,
 			create_rgb(cub3D->map->f_red, cub3D->map->f_green, cub3D->map->f_blue));
 		y++;

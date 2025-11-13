@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/13 19:35:55 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/13 20:35:44 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,14 @@ char	get_map_char(t_map *map, int x, int y)
 {
 	int	len;
 	
-	if (y < 0 || y >= map->count || x < 0)
+	if (y < 0 || y >= (map->count - map->conf_c) || x < 0)
 		return ('\0');
 	if (!map->copy[y])
 		return ('\0');
-	
+	printf("minimap line: %s\n", map->copy[y]);
 	len = ft_strlen(map->copy[y]);
 	if (len > 0 && map->copy[y][len - 1] == '\n')
 		len--;
-	
 	if (x >= len)
 		return ('\0');
 	

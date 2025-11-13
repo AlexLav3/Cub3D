@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:59:46 by javi              #+#    #+#             */
-/*   Updated: 2025/11/13 19:51:31 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/13 20:29:38 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	debug_player_spawn_simple(t_cub3D *cub3D)
 	printf("\n🎮 PLAYER SPAWN:\n");
 	printf("   Grid pos: [%d, %d]\n", player_x, player_y);
 	printf("   Exact pos: (%.2f, %.2f)\n", cub3D->player->pos_x, cub3D->player->pos_y);
-	printf("   File line: %d\n", player_y + cub3D->map->conf_c);
+	printf("   File line: %d\n", player_y);
 	printf("   Facing: %c (dir: %.2f, %.2f)\n", 
 		cub3D->player->dir, cub3D->player->dir_x, cub3D->player->dir_y);
 	printf("   Standing on: '%c'\n", get_map_char(cub3D->map, player_x, player_y));
