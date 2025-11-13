@@ -1,14 +1,5 @@
 We can put questions, ideas, concerns in here, so we don't have to send 300 messages on slack. 
 
-Alex: I was thinking what do we want to do with spaces, I think rendering them as walls makes more sense, 
-bc if there is a space in between the walls (that is allowed) we can't just have a random void or smt. It would seem like you can go there
-And it would look weird.
-
-I didn't find any seg faults, map validation seems okay for now. 
-
-N.B
-check comment on move_player
-
 Javi: Okay, so right now the player is initializing itself in the line 91 and 92 of init.c at .50 always, and it always faces north, so my next task
 is to fix the init direction and position, and figure out a way to also fix the minimap, which I think might come from the way the
 width is being calculated (you were saying this, so yeah) as it says the width is 30 but from the raw map debug the len is 12. For now, added at line 92 in map.c a function to reduce the newline and 
@@ -18,11 +9,20 @@ I guess it's about checking how we read the map file, as the order is defined, s
 the values for the walls and blank spaces.  Right now its counting the whole map as the entire .cub map file, let's say, it has 14 lines so it makes 15 lines as the map dimensions.
 Do you wanna work on this or should I? I should be going back to school next week to discuss our project further but I think we are doing good progress.
 
+-Alex: sorry, I don't understand what you mean. Techically, I have the conf_c as like, when the actual map starts, so that we don't read the configuration lines as part of the map. 
+I already took care of that, if I understand you correctly. 
+
 Additionally, we have void configs() in map.c and char config_l() in utils.c, so we have to determine
 which one we should keep. 
+
+- Alex: they serve two different purposes, check comments I added on both. 
+
 I added a raw map debug to help visualize how we are reading the .cub file, which should help us define better how we read the configs, floor, ceiling and then the walls and the starting facing position
 of the character. 
 
 Btw I know that game_loop function is not advantageous in our current implementation as we are not doing, let's say, game sprites and it could even lead to double rendering so its good that it's commented.
 
-I also see that the release_movement_keys resets p->move_y to 0, so I guess we also could add the call to that if we have the number of lines. Or what were you thinking?
+- Alex: yeah, in case we'll decide to add smt that actually needs it, we can uncomment it and add what is needed.
+
+I also see that the release_movement_keys resets p->move_y to 0, so I guess we also could add the call to that if we have the number of lines. Or what were you thinking? 
+-Alex: If you're referring to smt I said, I forgot what. I'm not sure what you mean with "if we have the number of lines"

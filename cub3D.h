@@ -216,6 +216,7 @@ void					debug_key_release(int keycode);
 void					debug_render_frame(int frame_count);
 
 //int						game_loop(void *param); //unused - see comment on function
+
 char					*config_l(int fd);
 int						iter_rows(t_map *map, int index, int iter, bool middle);
 void					debug_print_map_raw(t_map *map);

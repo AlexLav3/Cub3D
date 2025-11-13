@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/12 18:33:42 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/13 19:35:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ void		extract_color(char *line, int *colors)
 	}
 }
 
+/*
+this is for error checking before we even create the copy
+To avoid allocating the copy if there is any issue.
+This function is called by map_error. (errors.c) 
+*/
 char	*config_l(int fd)
 {
 	char	*line;

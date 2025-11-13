@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/12 18:32:58 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/13 19:37:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,14 @@ static int	set_config(t_map *map, char *line)
 	return (1);
 }
 
-void	configs(t_map *map)
+/*
+sets the conf_c as y, for counting when the actual map starts
+so we don't count configuration lines as part of the map size
+Called inside init.c, and the conf_c value is used in walls_check, for example. 
+Additionally, this sets the actual configurations, while config_l is used only for error checking
+to avoid allocating an initializing things if configuration lines have wrong chars, or other errors.
+*/
+void	configs(t_map *map) 
 {
 	int	y;
 
