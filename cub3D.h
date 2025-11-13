@@ -26,7 +26,7 @@
 # define MMAP_COLOR_FLOOR 0xE6E6E6
 # define MMAP_COLOR_SPACE 0x404040
 
-# define MOVESPEED 0.05
+# define MOVESPEED 0.1
 # define ROTSPEED 0.05
 
 //find the X11 equivalent later
@@ -218,4 +218,8 @@ void					debug_render_frame(int frame_count);
 //int						game_loop(void *param); //unused - see comment on function
 char					*config_l(int fd);
 int						iter_rows(t_map *map, int index, int iter, bool middle);
+void					debug_print_map_raw(t_map *map);
+char					get_map_char(t_map *map, int x, int y);
+void					debug_player_spawn_simple(t_cub3D *cub3D);
+
 #endif

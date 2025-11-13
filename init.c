@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/11 04:08:33 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/13 14:17:56 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	init_player(t_cub3D *cub3D)
 					printf("Direction vector: (%.2f, %.2f)\n",
 						cub3D->player->dir_x, cub3D->player->dir_y);
 					printf("Map dimensions: %d lines\n", cub3D->map->count);
+
 				}
 				return (1);
 			}
@@ -127,6 +128,8 @@ int	mlx_set(t_cub3D *Cub3D)
 	if (!init_player(Cub3D))
 		return (0);
 	render_3d_view(Cub3D);
+	debug_player_spawn_simple(Cub3D);
+	debug_print_map_raw(Cub3D->map);
 	mlx_hook(Cub3D->win, 17, 0, ft_close, (void *)Cub3D);
 	mlx_hook(Cub3D->win, 2, 1L << 0, ft_key_press, (void *)Cub3D);
 	mlx_hook(Cub3D->win, 3, 1L << 1, ft_key_release, (void *)Cub3D);

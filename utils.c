@@ -6,7 +6,7 @@
 /*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 19:31:12 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/12 18:33:42 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,22 @@ int	iter_rows(t_map *map, int index, int iter, bool middle)
 	if (map->copy[index][j] != '1') //first non-space char has to be a 1 
 		return (0);
 	return (1);
+}
+char	get_map_char(t_map *map, int x, int y)
+{
+	int	len;
+	
+	if (y < 0 || y >= map->count || x < 0)
+		return ('\0');
+	if (!map->copy[y])
+		return ('\0');
+	
+	len = ft_strlen(map->copy[y]);
+	if (len > 0 && map->copy[y][len - 1] == '\n')
+		len--;
+	
+	if (x >= len)
+		return ('\0');
+	
+	return (map->copy[y][x]);
 }

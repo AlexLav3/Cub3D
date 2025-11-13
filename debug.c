@@ -6,7 +6,7 @@
 /*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:59:46 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 18:13:26 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/12 19:37:44 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,4 +177,43 @@ void	debug_display_minimap(t_minimap *minimap)
 		y++;
 	}
 	printf("====================\n\n");
+}
+
+void	debug_print_map_raw(t_map *map)
+{
+	int y = 0;
+	
+	printf("\n=== RAW MAP DEBUG ===\n");
+	printf("Width: %d, Count: %d\n", map->width, map->count);
+	while (y < map->count && map->copy[y])
+	{
+		printf("Line %2d (len=%zu): [", y, ft_strlen(map->copy[y]));
+		for (int i = 0; map->copy[y][i]; i++)
+		{
+			if (map->copy[y][i] == '\n')
+				printf("\\n");
+			else if (map->copy[y][i] == ' ')
+				printf("_");
+			else
+				printf("%c", map->copy[y][i]);
+		}
+		printf("]\n");
+		y++;
+	}
+	printf("===================\n\n");
+}
+
+void	debug_player_spawn_simple(t_cub3D *cub3D)
+{
+	int player_x = (int)cub3D->player->pos_x;
+	int player_y = (int)cub3D->player->pos_y;
+	
+	printf("\n🎮 PLAYER SPAWN:\n");
+	printf("   Grid pos: [%d, %d]\n", player_x, player_y);
+	printf("   Exact pos: (%.2f, %.2f)\n", cub3D->player->pos_x, cub3D->player->pos_y);
+	printf("   File line: %d\n", player_y + cub3D->map->conf_c);
+	printf("   Facing: %c (dir: %.2f, %.2f)\n", 
+		cub3D->player->dir, cub3D->player->dir_x, cub3D->player->dir_y);
+	printf("   Standing on: '%c'\n", get_map_char(cub3D->map, player_x, player_y));
+	printf("\n");
 }

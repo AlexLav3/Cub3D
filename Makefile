@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc -g 
 OBJ_DIR = obj
-CFLAGS = 
+CFLAGS = -Wall -Werror -Wextra 
 
 SOURCES = main.c init.c win_actions.c errors.c map.c utils.c raycast.c render.c minimap_1.c minimap_2.c minimap_render.c \
 debug.c p_movement_1.c

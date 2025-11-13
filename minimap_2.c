@@ -6,7 +6,7 @@
 /*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 08:50:28 by javi              #+#    #+#             */
-/*   Updated: 2025/11/10 11:31:49 by javi             ###   ########.fr       */
+/*   Updated: 2025/11/12 18:36:13 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,37 +45,39 @@ char	*add_minimap_line(t_cub3D *cub3D, t_minimap *m, int y)
 	int		x;
 	int		player_x;
 	int		player_y;
+	char	map_char;
 
 	line = malloc(sizeof(char) * (m->size + 1));
 	if (!line)
 		return (NULL);	
-	x = 0;
-	while (x < m->size)
-		line[x++] = '\0';
-	line[m->size] = '\0';
-	x = 0;
+	
 	player_x = (int)cub3D->player->pos_x;
 	player_y = (int)cub3D->player->pos_y;
+	
+	x = 0;
 	while (x < m->size)
 	{
-		if (!is_valid_map_coord(y + m->offset_y, cub3D->map->count)
-			|| !is_valid_map_coord(x + m->offset_x, cub3D->map->width))
-			line[x] = '\0';
-		else if (player_x == (x + m->offset_x) && player_y == (y + m->offset_y))
+		if (player_x == (x + m->offset_x) && player_y == (y + m->offset_y))
 			line[x] = 'P';
-		else if (cub3D->map->copy[y + m->offset_y][x + m->offset_x] == '1')
-			line[x] = '1';
-		else if (cub3D->map->copy[y + m->offset_y][x + m->offset_x] == '0')
-			line[x] = '0';
 		else
-			line[x] = '\0';
+		{
+			map_char = get_map_char(cub3D->map, x + m->offset_x, y + m->offset_y);
+			if (map_char == '1')
+				line[x] = '1';
+			else if (map_char == '0')
+				line[x] = '0';
+			else
+				line[x] = ' ';  // Use space instead of '\0' for out of bounds
+		}
 		x++;
 	}
+	line[m->size] = '\0';
 	return (line);
 }
-/**
+/*
  * generate_minimap - Create full minimap char array centered on player
  */
+ 
 char	**generate_minimap(t_cub3D *cub3D, t_minimap *minimap)
 {
 	char	**mmap;

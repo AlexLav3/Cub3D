@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: javi <javi@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 19:53:50 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/12 18:32:58 by javi             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	create_copy(t_map *map)
 			return ;
 		}
 		len = ft_strlen(map->copy[y]);
+		if (len > 0 && map->copy[y][len - 1] == '\n')
+			len--;
 		if (len > map->width)
 			map->width = len;
 		y++;
