@@ -41,6 +41,7 @@
 # define NT 4
 # define F 5
 # define C 6
+# define DR 9
 
 # define F_L 7 //first and last row of map, for the walls check
 # define MID 8 //middle rows, also for walls check
@@ -127,6 +128,7 @@ typedef struct g_map
 	t_cub_img			S_text;
 	t_cub_img			E_text;
 	t_cub_img			W_text;
+	t_cub_img			D_text;
 	char				*texture;
 	char				*player;
 	int					walkable;

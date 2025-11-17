@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/13 20:32:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/17 21:04:52 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	mlx_set(t_cub3D *Cub3D)
 	Cub3D->win = mlx_new_window(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (!Cub3D->win)
 		return (0);
-	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT); //what is this for? there is no image (aside textures)
+	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!Cub3D->img.img)
 		return (0);
 	Cub3D->img.addr = mlx_get_data_addr(Cub3D->img.img,
@@ -161,6 +161,8 @@ void	set_textures_col(t_map *map, int op, char *path)
 		texture = &map->E_text;
 	else if (op == WT)
 		texture = &map->W_text;
+	else if(DR)
+		texture = &map->D_text;
 	else
 		return;
 	

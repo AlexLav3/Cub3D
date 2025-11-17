@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/13 19:37:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2025/11/17 21:10:40 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static int	set_config(t_map *map, char *line)
 		set_colors(map, F, line + 2);
 	else if (!ft_strncmp(line, "C ", 2))
 		set_colors(map, C, line + 2);
+	else if (!ft_strncmp(line, "DR ", 3))
+		set_textures_col(map, DR, line + 2);
 	return (1);
 }
 

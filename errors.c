@@ -11,13 +11,14 @@ int	is_config_line(char *line)
 		ft_strncmp(line, "WE ", 3) == 0 ||
 		ft_strncmp(line, "EA ", 3) == 0 ||
 		ft_strncmp(line, "F ", 2) == 0 ||
+		ft_strncmp(line, "D ", 2) == 0 ||
 		ft_strncmp(line, "C ", 2) == 0);
 }
 
 static int	valid_map_char(char c)
 {
 	return (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W'
-		|| c == ' ' || c == '\n' || c == '\t');
+		|| c == ' ' || c == '\n' || c == '\t' || c == 'D'); //D for Doors
 }
 
 int	map_error(int fd)
