@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/13 19:37:25 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:09:55 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ static int	set_config(t_map *map, char *line)
 }
 
 /*
-sets the conf_c as y, for counting when the actual map starts
+sets the conf_end as y, for counting when the actual map starts
 so we don't count configuration lines as part of the map size
-Called inside init.c, and the conf_c value is used in walls_check, for example. 
+Called inside init.c, and the conf_end value is used in walls_check, for example. 
 Additionally, this sets the actual configurations, while config_l is used only for error checking
 to avoid allocating an initializing things if configuration lines have wrong chars, or other errors.
 */
@@ -68,7 +68,7 @@ void	configs(t_map *map)
 		else
 			break ;
 	}
-	map->conf_c = y;
+	map->conf_end = y;
 }
 
 void	create_copy(t_map *map)
@@ -113,14 +113,14 @@ int	walls_check(t_map *map)
 	int	rows;
 	int	middle;
 
-	rows = map->conf_c;
+	rows = map->conf_end;
 	if (!iter_rows(map, rows, 0, false))
 		return (0);
 	while (map->copy[rows])
 		rows++;
 	if (!iter_rows(map, rows - 1, 0, false))
 		return (0);
-	middle = map->conf_c + 1;
+	middle = map->conf_end + 1;
 	while (middle < rows - 1)
 	{
 		if (!iter_rows(map, middle, 0, true))

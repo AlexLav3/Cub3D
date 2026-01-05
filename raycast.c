@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2025/11/13 19:56:27 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:10:07 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int create_rgb(int r, int g, int b)
 int is_wall(t_map *map, int x, int y)
 {
 	// Bounds check - outside map is considered a wall
-	if (y < 0 || y >= (map->count - map->conf_c) || x < 0)
+	if (y < 0 || y >= (map->count - map->conf_end) || x < 0)
 		return (1);
 	
 	if (!map->copy[y] || x >= (int)ft_strlen(map->copy[y]))

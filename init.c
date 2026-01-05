@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/13 20:32:37 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:09:51 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	init_player(t_cub3D *cub3D)
 						cub3D->player->pos_x, cub3D->player->pos_y);
 					printf("Direction vector: (%.2f, %.2f)\n",
 						cub3D->player->dir_x, cub3D->player->dir_y);
-					printf("Map dimensions: %d lines\n", cub3D->map->count - cub3D->map->conf_c); //added -cub3D->map->conf_c
+					printf("Map dimensions: %d lines\n", cub3D->map->count - cub3D->map->conf_end); //added -cub3D->map->conf_end
 
 				}
 				return (1);

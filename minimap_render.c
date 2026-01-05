@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 11:25:18 by javi              #+#    #+#             */
-/*   Updated: 2025/11/13 20:39:35 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:10:31 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void render_minimap(t_cub3D *cub3D)
 	minimap.offset_x = get_minimap_offset(&minimap,
 			cub3D->map->width, (int)cub3D->player->pos_x);
 	minimap.offset_y = get_minimap_offset(&minimap,
-			(cub3D->map->count  - cub3D->map->conf_c), (int)cub3D->player->pos_y); //  - cub3D->map->conf_c for correct calculation, if I understand the function correctly.
+			(cub3D->map->count  - cub3D->map->conf_end), (int)cub3D->player->pos_y); //  - cub3D->map->conf_end for correct calculation, if I understand the function correctly.
 
 	minimap.map = generate_minimap(cub3D, &minimap);
 	if (!minimap.map)

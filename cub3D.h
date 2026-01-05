@@ -133,7 +133,7 @@ typedef struct g_map
 	int					count;
 	int					width;
 	char				**copy;
-	int					conf_c;
+	int					conf_end; //rename to conf_end
 	t_cub3D				*cub3D;
 }						t_map;
 

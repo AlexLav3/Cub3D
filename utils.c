@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/13 20:35:44 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:10:13 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ char	*config_l(int fd)
 //function unused for now
 // void sizem(t_cub3D *Cub3D) //size of map
 // {
-// 	int rows = Cub3D->map->conf_c;
+// 	int rows = Cub3D->map->conf_end;
 // 	int columns = 0;
 // 	while (Cub3D->map->copy[rows] != NULL)
 // 		rows++;
 // 	if (rows > 0)
-// 		columns = ft_strlen(Cub3D->map->copy[Cub3D->map->conf_c]) - 1;
+// 		columns = ft_strlen(Cub3D->map->copy[Cub3D->map->conf_end]) - 1;
 // 	else
 // 		columns = 0;
 // 	Cub3D->w_height = rows * TILE_SIZE;
@@ -108,7 +108,7 @@ char	get_map_char(t_map *map, int x, int y)
 {
 	int	len;
 	
-	if (y < 0 || y >= (map->count - map->conf_c) || x < 0)
+	if (y < 0 || y >= (map->count - map->conf_end) || x < 0)
 		return ('\0');
 	if (!map->copy[y])
 		return ('\0');

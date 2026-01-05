@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:59:46 by javi              #+#    #+#             */
-/*   Updated: 2025/11/13 20:29:38 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/06 00:10:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,13 @@ void	debug_display_minimap(t_minimap *minimap)
 void	debug_print_map_raw(t_map *map)
 {
 	//int y = 0; like this , yes you are printing the whole cub file
-	int y = map->conf_c; //this will print only the actual map lines without the configuration lines.
+	int y = map->conf_end; //this will print only the actual map lines without the configuration lines.
 	
 	printf("\n=== RAW MAP DEBUG ===\n");
-	printf("Width: %d, Count: %d\n", map->width, map->count - map->conf_c); // - conf_c for the actual count of map lines.
+	printf("Width: %d, Count: %d\n", map->width, map->count - map->conf_end); // - conf_end for the actual count of map lines.
 	while (y < map->count && map->copy[y])
 	{
-		printf("Line %2d (len=%zu): [", y - map->conf_c, ft_strlen(map->copy[y]));
+		printf("Line %2d (len=%zu): [", y - map->conf_end, ft_strlen(map->copy[y]));
 		for (int i = 0; map->copy[y][i]; i++)
 		{
 			if (map->copy[y][i] == '\n')
