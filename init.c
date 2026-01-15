@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/06 00:09:51 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/15 23:31:55 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,37 +75,52 @@ int	init_player(t_cub3D *cub3D)
 {
 	int	x;
 	int	y;
+	int	actual_y;
+	int	player_count;
 
+	player_count = 0;
 	y = 0;
-	while (cub3D->map->copy[y])
+	while (y < (cub3D->map->count - cub3D->map->conf_end))
 	{
+		actual_y = y + cub3D->map->conf_end;
+		if (!cub3D->map->copy[actual_y])
+			break;
 		x = 0;
-		while (cub3D->map->copy[y][x])
+		while (cub3D->map->copy[actual_y][x] && 
+			   cub3D->map->copy[actual_y][x] != '\n')
 		{
-			if (cub3D->map->copy[y][x] == 'N' ||
-				cub3D->map->copy[y][x] == 'S' ||
-				cub3D->map->copy[y][x] == 'E' ||
-				cub3D->map->copy[y][x] == 'W')
+			if (cub3D->map->copy[actual_y][x] == 'N' ||
+				cub3D->map->copy[actual_y][x] == 'S' ||
+				cub3D->map->copy[actual_y][x] == 'E' ||
+				cub3D->map->copy[actual_y][x] == 'W')
 			{
-				cub3D->player->dir = cub3D->map->copy[y][x];
+				if (player_count > 0)
+				{
+					printf("Error: Multiple player spawns found\n");
+					return (0);
+				}
+				cub3D->player->dir = cub3D->map->copy[actual_y][x];
 				cub3D->player->pos_x = (float)x + 0.5;
 				cub3D->player->pos_y = (float)y + 0.5;
-				cub3D->map->copy[y][x] = '0';
-				init_player_direction(cub3D);
-				if (DEBUG_INIT)
-				{
-					printf("Player spawned at: (%.2f, %.2f)\n", 
-						cub3D->player->pos_x, cub3D->player->pos_y);
-					printf("Direction vector: (%.2f, %.2f)\n",
-						cub3D->player->dir_x, cub3D->player->dir_y);
-					printf("Map dimensions: %d lines\n", cub3D->map->count - cub3D->map->conf_end); //added -cub3D->map->conf_end
-
-				}
-				return (1);
+				cub3D->map->copy[actual_y][x] = '0';
+				player_count++;
 			}
 			x++;
 		}
 		y++;
+	}
+	if (player_count == 0)
+	{
+		printf("Error: No player spawn found\n");
+		return (0);
+	}
+	init_player_direction(cub3D);
+	if (DEBUG_INIT)
+	{
+		printf("Player spawned at: (%.2f, %.2f) [map coordinates]\n", 
+			cub3D->player->pos_x, cub3D->player->pos_y);
+		printf("Direction vector: (%.2f, %.2f)\n",
+			cub3D->player->dir_x, cub3D->player->dir_y);
 	}
 	return (1);
 }

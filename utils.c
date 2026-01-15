@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/06 00:10:13 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/15 23:31:55 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,17 @@ int	iter_rows(t_map *map, int index, int iter, bool middle)
 char	get_map_char(t_map *map, int x, int y)
 {
 	int	len;
+	int	actual_y;
 	
 	if (y < 0 || y >= (map->count - map->conf_end) || x < 0)
 		return ('\0');
-	if (!map->copy[y])
+	actual_y = y + map->conf_end;
+	if (!map->copy[actual_y])
 		return ('\0');
-	printf("minimap line: %s\n", map->copy[y]);
-	len = ft_strlen(map->copy[y]);
-	if (len > 0 && map->copy[y][len - 1] == '\n')
+	len = ft_strlen(map->copy[actual_y]);
+	if (len > 0 && map->copy[actual_y][len - 1] == '\n')
 		len--;
 	if (x >= len)
 		return ('\0');
-	
-	return (map->copy[y][x]);
+	return (map->copy[actual_y][x]);
 }

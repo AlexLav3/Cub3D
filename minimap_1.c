@@ -76,42 +76,54 @@ void	set_minimap_border(t_minimap *minimap, int color)
 		y++;
 	}
 }
+// Draw a thick pixel (3x3 square) for better visibility
+static void	draw_thick_pixel(t_minimap *m, int x, int y, int color)
+{
+	int	dx;
+	int	dy;
+
+	dx = -1;
+	while (dx <= 1)
+	{
+		dy = -1;
+		while (dy <= 1)
+		{
+			my_mlx_pixel_put(&m->img, x + dx, y + dy, color);
+			dy++;
+		}
+		dx++;
+	}
+}
+
 /*
- * draw_minimap_ray - draw a short line from the player's center in direction
- * of player->dir_x / dir_y. Uses integer sampling (simple Bresenham would be
- * slightly more accurate but this is lightweight and readable).
+ * draw_minimap_ray - draw a thick line from the player's center in direction
+ * of player->dir_x / dir_y. The line sticks to the character and is more visible.
  */
 void draw_minimap_ray(t_minimap *m, t_player *p)
 {
-	int center_x;
-	int center_y;
-	int i;
-	int max;
-	float lenf;
-	float step_x;
-	float step_y;
+	int		center_x;
+	int		center_y;
+	int		i;
+	int		max;
+	float	lenf;
+	float	step_x;
+	float	step_y;
 
-	/* center of minimap in pixels where player is drawn */
 	center_x = (m->view_dist) * m->tile_size + (m->tile_size / 2);
 	center_y = (m->view_dist) * m->tile_size + (m->tile_size / 2);
-
-	/* ray length in pixels (tweakable) */
-	lenf = (float)m->tile_size * 2.5f;
+	lenf = (float)m->tile_size * 3.5f;
 	max = (int)lenf;
-
-	/* tiny float step per iteration */
-	step_x = p->dir_x;
-	step_y = p->dir_y;
-
-	i = 1; /* start at 1 so we don't overwrite exact center color */
+	step_x = p->dir_x * (float)m->tile_size;
+	step_y = p->dir_y * (float)m->tile_size;
+	i = 0;
 	while (i <= max)
 	{
-		int rx;
-		int ry;
+		int	rx;
+		int	ry;
 
-		rx = center_x + (int)(step_x * i);
-		ry = center_y + (int)(step_y * i);
-		my_mlx_pixel_put(&m->img, rx, ry, 0xFF0000);
+		rx = center_x + (int)(step_x * i / (float)m->tile_size);
+		ry = center_y + (int)(step_y * i / (float)m->tile_size);
+		draw_thick_pixel(m, rx, ry, 0xFF0000);
 		i++;
 	}
 }

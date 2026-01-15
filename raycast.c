@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2026/01/06 00:10:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/15 23:31:55 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,26 @@ int create_rgb(int r, int g, int b)
  */
 int is_wall(t_map *map, int x, int y)
 {
+	int	actual_y;
+	int	len;
+	
 	// Bounds check - outside map is considered a wall
 	if (y < 0 || y >= (map->count - map->conf_end) || x < 0)
 		return (1);
 	
-	if (!map->copy[y] || x >= (int)ft_strlen(map->copy[y]))
+	// Convert map-relative y to file-relative y (account for config lines)
+	actual_y = y + map->conf_end;
+	if (!map->copy[actual_y])
 		return (1);
 	
-	// '1' is a wall, everything else is walkable - Alex: I had the "is walkable" variable for this (in case we will have doors, for example.)
-	return (map->copy[y][x] == '1');
+	len = ft_strlen(map->copy[actual_y]);
+	if (len > 0 && map->copy[actual_y][len - 1] == '\n')
+		len--;
+	if (x >= len)
+		return (1);
+	
+	// '1' is a wall, everything else is walkable
+	return (map->copy[actual_y][x] == '1');
 }
 
 /**

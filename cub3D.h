@@ -19,8 +19,8 @@
 # define PLAYER_HEIGHT 32
 
 //Minimap vars
-# define MMAP_PIXEL_SIZE 128
-# define MMAP_VIEW_DIST 4
+# define MMAP_PIXEL_SIZE 256
+# define MMAP_VIEW_DIST 5
 # define MMAP_COLOR_PLAYER 0x00FF00
 # define MMAP_COLOR_WALL 0x808080
 # define MMAP_COLOR_FLOOR 0xE6E6E6
