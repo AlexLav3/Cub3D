@@ -4,7 +4,7 @@ OBJ_DIR = obj
 CFLAGS = -Wall -Werror -Wextra 
 
 SOURCES = main.c init.c win_actions.c errors.c map.c utils.c raycast.c render.c minimap_1.c minimap_2.c minimap_render.c \
-debug.c p_movement_1.c
+debug.c p_movement_1.c clean.c
 OBJECTS = $(SOURCES:%.c=$(OBJ_DIR)/%.o)
 
 MLX_DIR = minilibx-linux

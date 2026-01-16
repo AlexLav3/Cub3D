@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/15 23:31:55 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/16 23:47:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	mlx_set(t_cub3D *Cub3D)
 	Cub3D->win = mlx_new_window(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (!Cub3D->win)
 		return (0);
-	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT); //what is this for? there is no image (aside textures)
+	Cub3D->img.img = mlx_new_image(Cub3D->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!Cub3D->img.img)
 		return (0);
 	Cub3D->img.addr = mlx_get_data_addr(Cub3D->img.img,
@@ -139,7 +139,7 @@ int	mlx_set(t_cub3D *Cub3D)
 		&Cub3D->img.endian);
 	configs(Cub3D->map);
 	if(!walls_check(Cub3D->map))
-		return (printf("Not enclosed by walls\n"), 0);
+		return (printf("Not enclosed by walls\n"), clean_all(Cub3D), 0);
 	if (!init_player(Cub3D))
 		return (0);
 	render_3d_view(Cub3D);

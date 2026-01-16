@@ -223,4 +223,7 @@ void					debug_print_map_raw(t_map *map);
 char					get_map_char(t_map *map, int x, int y);
 void					debug_player_spawn_simple(t_cub3D *cub3D);
 
+
+void					clean_all(t_cub3D *Cub3D);
+
 #endif
