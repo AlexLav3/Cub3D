@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:25 by elavrich          #+#    #+#             */
-/*   Updated: 2025/11/10 20:40:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/23 23:41:16 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,34 @@
 
 int	ft_close(void *param)
 {
-	t_cub3D	*cub3D;
+	t_cub3	*cub3;
+	int		i;
 
-	cub3D = (t_cub3D *)param;
-	
-	// Destroy textures if they were loaded
-	if (cub3D->map->N_text.img)
-		mlx_destroy_image(cub3D->mlx, cub3D->map->N_text.img);
-	if (cub3D->map->S_text.img)
-		mlx_destroy_image(cub3D->mlx, cub3D->map->S_text.img);
-	if (cub3D->map->E_text.img)
-		mlx_destroy_image(cub3D->mlx, cub3D->map->E_text.img);
-	if (cub3D->map->W_text.img)
-		mlx_destroy_image(cub3D->mlx, cub3D->map->W_text.img);
-	
-	// Destroy main image buffer
-	if (cub3D->img.img)
-		mlx_destroy_image(cub3D->mlx, cub3D->img.img);
-	
-	// Destroy window
-	if (cub3D->win)
-		mlx_destroy_window(cub3D->mlx, cub3D->win);
-	
-	// Free map data
-	if (cub3D->map && cub3D->map->copy)
+	cub3 = (t_cub3 *)param;
+	clean_imgs(cub3);
+	if (cub3->map && cub3->map->copy)
 	{
-		int i = 0;
-		while (cub3D->map->copy[i])
+		i = 0;
+		while (cub3->map->copy[i])
 		{
-			free(cub3D->map->copy[i]);
+			free(cub3->map->copy[i]);
 			i++;
 		}
-		free(cub3D->map->copy);
+		free(cub3->map->copy);
 	}
-	if (cub3D->map)
-		free(cub3D->map);
-	
-	// Destroy display (this also frees mlx pointer)
-	if (cub3D->mlx)
-		mlx_destroy_display(cub3D->mlx);
-	
+	if (cub3->map)
+		free(cub3->map);
+	if (cub3->mlx)
+		mlx_destroy_display(cub3->mlx);
 	exit(0);
 	return (0);
 }
 
 static int	handle_movement_keys(int keycode, t_player *p)
 {
-	if(keycode != W && keycode != S && keycode != A && keycode != D && keycode != XK_Left && keycode != XK_Right)
-		return 0;
+	if (keycode != W && keycode != S && keycode != A && keycode != D
+		&& keycode != XK_Left && keycode != XK_Right)
+		return (0);
 	if (keycode == W)
 		p->move_y = 1;
 	else if (keycode == S)
@@ -74,21 +54,20 @@ static int	handle_movement_keys(int keycode, t_player *p)
 		p->rotate = -1;
 	else if (keycode == XK_Right)
 		p->rotate = 1;
-	return 1;
+	return (1);
 }
-
 
 int	ft_key_press(int keycode, void *v)
 {
-	t_cub3D	*cub3D;
+	t_cub3	*cub3;
 
-	cub3D = v;
+	cub3 = v;
 	if (keycode == XK_Escape)
-		ft_close(cub3D);
-	if(handle_movement_keys(keycode, cub3D->player))
+		ft_close(cub3);
+	if (handle_movement_keys(keycode, cub3->player))
 	{
-		if(move_player(cub3D))
-			render_3d_view(cub3D);
+		if (move_player(cub3))
+			render_3d_view(cub3, 0);
 	}
 	return (0);
 }
@@ -103,12 +82,12 @@ static void	release_movement_keys(int keycode, t_player *p)
 
 int	ft_key_release(int keycode, void *v)
 {
-	t_cub3D	*cub3D;
+	t_cub3	*cub3;
 
-	cub3D = v;
-	release_movement_keys(keycode, cub3D->player);
-	if ((keycode == XK_Left && cub3D->player->rotate == -1) ||
-		(keycode == XK_Right && cub3D->player->rotate == 1))
-		cub3D->player->rotate = 0;
+	cub3 = v;
+	release_movement_keys(keycode, cub3->player);
+	if ((keycode == XK_Left && cub3->player->rotate == -1)
+		|| (keycode == XK_Right && cub3->player->rotate == 1))
+		cub3->player->rotate = 0;
 	return (0);
 }

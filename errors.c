@@ -1,17 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   errors.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/17 03:28:18 by elavrich          #+#    #+#             */
+/*   Updated: 2026/01/23 00:10:22 by jcouto           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3D.h"
 
-//we can add a check for missing configs and colors 
 int	is_config_line(char *line)
 {
 	while (*line == ' ' || *line == '\t')
 		line++;
 	return (
-		ft_strncmp(line, "NO ", 3) == 0 ||
-		ft_strncmp(line, "SO ", 3) == 0 ||
-		ft_strncmp(line, "WE ", 3) == 0 ||
-		ft_strncmp(line, "EA ", 3) == 0 ||
-		ft_strncmp(line, "F ", 2) == 0 ||
-		ft_strncmp(line, "C ", 2) == 0);
+		ft_strncmp(line, "NO ", 3) == 0
+		|| ft_strncmp(line, "SO ", 3) == 0
+		|| ft_strncmp(line, "WE ", 3) == 0
+		|| ft_strncmp(line, "EA ", 3) == 0
+		|| ft_strncmp(line, "F ", 2) == 0
+		|| ft_strncmp(line, "C ", 2) == 0);
 }
 
 static int	valid_map_char(char c)
@@ -28,7 +39,8 @@ int	map_error(int fd)
 
 	error = 0;
 	line = config_l(fd);
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		i = 0;
 		while (line[i])
@@ -38,8 +50,9 @@ int	map_error(int fd)
 			i++;
 		}
 		free(line);
+		line = get_next_line(fd);
 	}
-	if(close(fd))
+	if (close(fd))
 		perror("close");
 	if (error)
 		return (printf("wrong char in file\n"), 1);

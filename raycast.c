@@ -5,254 +5,121 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 10:40:02 by javi              #+#    #+#             */
-/*   Updated: 2026/01/15 23:31:55 by jcouto           ###   ########.fr       */
+/*   Created: 2026/01/23 00:10:59 by jcouto            #+#    #+#             */
+/*   Updated: 2026/01/23 00:11:00 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int create_rgb(int r, int g, int b)
+/**
+ * init_ray_state - Initialize ray casting state from player position
+ * @player: Player position and angle
+ * @ray_angle: Direction to cast this ray
+ * @state: Pointer to ray state structure to initialize
+ * 
+ * Sets up the starting position and direction for raycasting.
+ */
+static void	init_ray_state(t_player *player, float ray_angle,
+	t_ray_state *state)
 {
-	// printf("r %d\n", r);
-	// printf("g %d\n", g);
-	// printf("b %d\n", b);
-	return (r << 16 | g << 8 | b);
+	state->x = player->pos_x;
+	state->y = player->pos_y;
+	state->dir_x = cos(ray_angle);
+	state->dir_y = sin(ray_angle);
+	state->distance = 0;
+	state->prev_map_x = (int)state->x;
 }
 
 /**
- * is_wall - Check if a map position contains a wall
- * @map: The game map structure
- * @x: X coordinate in map grid
- * @y: Y coordinate in map grid
+ * step_ray_forward - Advance ray position by one step along its direction
+ * @state: Pointer to ray state structure
  * 
- * Returns: 1 if wall ('1'), 0 if empty space ('0' or player spawn)
+ * Moves the ray forward by RAY_STEP distance and updates the total distance.
  */
-int is_wall(t_map *map, int x, int y)
+static void	step_ray_forward(t_ray_state *state)
 {
-	int	actual_y;
-	int	len;
-	
-	// Bounds check - outside map is considered a wall
-	if (y < 0 || y >= (map->count - map->conf_end) || x < 0)
-		return (1);
-	
-	// Convert map-relative y to file-relative y (account for config lines)
-	actual_y = y + map->conf_end;
-	if (!map->copy[actual_y])
-		return (1);
-	
-	len = ft_strlen(map->copy[actual_y]);
-	if (len > 0 && map->copy[actual_y][len - 1] == '\n')
-		len--;
-	if (x >= len)
-		return (1);
-	
-	// '1' is a wall, everything else is walkable
-	return (map->copy[actual_y][x] == '1');
+	state->x += state->dir_x * RAY_STEP;
+	state->y += state->dir_y * RAY_STEP;
+	state->distance += RAY_STEP;
 }
 
 /**
- * normalize_angle - Keep angle within 0 to 2π range
- * @angle: The angle to normalize
+ * update_ray_on_hit - Update ray structure when wall is hit
+ * @ray: Pointer to ray structure to update
+ * @ray_angle: Direction of the ray
+ * @state: Pointer to ray state structure
+ * @map_x: Map X coordinate where wall was hit
  * 
- * Returns: Normalized angle
+ * Fills in the ray structure with hit information including distance,
+ * position, and whether it hit a vertical or horizontal wall.
  */
-float normalize_angle(float angle)
+static void	update_ray_on_hit(t_ray *ray, float ray_angle,
+	t_ray_state *state, int map_x)
 {
-	while (angle < 0)
-		angle += 2 * PI;
-	while (angle >= 2 * PI)
-		angle -= 2 * PI;
-	return (angle);
+	ray->distance = state->distance;
+	ray->angle = ray_angle;
+	ray->wall_x = state->x;
+	ray->wall_y = state->y;
+	if (state->prev_map_x != map_x)
+		ray->hit_vertical = 1;
+	else
+		ray->hit_vertical = 0;
 }
+
+/**
+ * check_wall_collision - Check if ray hit a wall at current position
+ * @map: Game map
+ * @ray: Pointer to ray structure
+ * @ray_angle: Direction of the ray
+ * @state: Pointer to ray state structure
+ * 
+ * Returns: 1 if wall was hit, 0 otherwise
+ */
+static int	check_wall_collision(t_map *map, t_ray *ray, float ray_angle,
+	t_ray_state *state)
+{
+	int	map_x;
+	int	map_y;
+
+	map_x = (int)state->x;
+	map_y = (int)state->y;
+	if (is_wall(map, map_x, map_y))
+	{
+		update_ray_on_hit(ray, ray_angle, state, map_x);
+		return (1);
+	}
+	state->prev_map_x = map_x;
+	return (0);
+}
+
 /**
  * cast_single_ray - Cast one ray and find where it hits a wall
  * @player: Player position and angle
  * @map: Game map
  * @ray_angle: Direction to cast this ray
  * 
- * This is the heart of raycasting. We step forward in small increments
- * along the ray direction until we hit a wall.
+ * This is the core raycasting algorithm. We step forward in small increments
+ * along the ray direction until we hit a wall or reach maximum depth.
  * 
  * Returns: Ray structure with hit information
  */
-t_ray cast_single_ray(t_player *player, t_map *map, float ray_angle)
+t_ray	cast_single_ray(t_player *player, t_map *map, float ray_angle)
 {
-	t_ray   ray;
-	float   ray_x;          // Current ray position X
-	float   ray_y;          // Current ray position Y
-	float   ray_dir_x;      // Ray direction X component
-	float   ray_dir_y;      // Ray direction Y component
-	float   distance;       // Total distance traveled
-	int     map_x;          // Current map grid X
-	int     map_y;          // Current map grid Y
-	int   prev_map_x;
-	// Initialize ray starting at player position
-	ray_x = player->pos_x;
-	ray_y = player->pos_y;
-	
-	// Calculate ray direction vector from angle
-	ray_dir_x = cos(ray_angle);
-	ray_dir_y = sin(ray_angle);
-	
-	// Start with zero distance
-	distance = 0;
-	// Store initial grid position
-	prev_map_x = (int)ray_x;
-	while (distance < MAX_DEPTH)
+	t_ray			ray;
+	t_ray_state		state;
+
+	init_ray_state(player, ray_angle, &state);
+	while (state.distance < MAX_DEPTH)
 	{
-		// Advance ray
-		ray_x += ray_dir_x * RAY_STEP;
-		ray_y += ray_dir_y * RAY_STEP;
-		distance += RAY_STEP;
-		
-		// Get current grid cell
-		map_x = (int)ray_x;
-		map_y = (int)ray_y;
-		
-		// Check if we hit a wall
-		if (is_wall(map, map_x, map_y))
-		{
-			// Store hit information
-			ray.distance = distance;
-			ray.angle = ray_angle;
-			ray.wall_x = ray_x;
-			ray.wall_y = ray_y;
-			// Determine if we hit a vertical or horizontal wall
-			// This is used to shade walls differently for depth perception
-			if (prev_map_x != map_x)
-				ray.hit_vertical = 1;  // Crossed vertical grid line (hit E/W wall)
-			else
-				ray.hit_vertical = 0;   // Crossed horizontal grid line (hit N/S wall)
+		step_ray_forward(&state);
+		if (check_wall_collision(map, &ray, ray_angle, &state))
 			return (ray);
-		}
-		prev_map_x = map_x;
 	}
-	// No wall found within max depth - return max distance
 	ray.distance = MAX_DEPTH;
 	ray.angle = ray_angle;
-	ray.wall_x = ray_x;
-	ray.wall_y = ray_y;
+	ray.wall_x = state.x;
+	ray.wall_y = state.y;
 	ray.hit_vertical = 0;
 	return (ray);
-}
-
-/**
- * calculate_wall_height - Calculate screen height of wall slice
- * @distance: Distance from player to wall
- * 
- * Closer walls appear taller on screen. Alex: I feel something is missing bc the width is fucked.
- * We use inverse proportion: height = constant / distance
- * 
- * Returns: Height in pixels
- */
-int calculate_wall_height(float distance)
-{
-	int height;
-	
-	// Avoid division by zero
-	if (distance < 0.01)
-		distance = 0.01;
-	
-	// distance is in grid units 
-	height = (int)(WIN_HEIGHT / distance);
-	
-	// Clamp to reasonable values
-	if (height > WIN_HEIGHT * 3)
-		height = WIN_HEIGHT * 3;
-	
-	return (height);
-}
-
-/**
- * get_wall_color - Determine color for wall based on direction
- * @ray: The ray that hit the wall
- * 
- * We shade vertical and horizontal walls differently to create
- * depth perception (like lighting from above).
- * 
- * Returns: RGB color integer
- */
-int get_wall_color(t_ray ray)
-{
-	t_color color;
-	
-	if (ray.hit_vertical)
-	{
-		// Vertical walls (North/South) - Lighter shade
-		color.r = 200;
-		color.g = 50;
-		color.b = 50;
-	}
-	else
-	{
-		// Horizontal walls (East/West) - Darker shade
-		color.r = 150;
-		color.g = 30;
-		color.b = 30;
-	}
-	
-	// Optional: Add distance-based darkening (fog effect)
-	float fog = 1.0 - (ray.distance / MAX_DEPTH);
-	if (fog < 0.3)
-		fog = 0.3;  // Don't go completely black
-	
-	color.r *= fog;
-	color.g *= fog;
-	color.b *= fog;
-	
-	return (create_rgb(color.r, color.g, color.b));
-}
-
-/**
- * draw_vertical_line - Draw one vertical stripe of the wall
- * @cub3D: Main game structure
- * @x: Screen X coordinate (column)
- * @wall_height: Height of wall to draw
- * @color: Color of the wall
- * 
- * This draws one vertical slice of wall, centered on screen.
- */
-void draw_vertical_line(t_cub3D *cub3D, int x, int wall_height, int color)
-{
-	int y;
-	int start_y;
-	int end_y;
-	
-	// Calculate where wall starts and ends on screen (centered vertically)
-	start_y = (WIN_HEIGHT / 2) - (wall_height / 2);
-	end_y = start_y + wall_height;
-	
-	// Clamp to screen bounds
-	if (start_y < 0)
-		start_y = 0;
-	if (end_y > WIN_HEIGHT)
-		end_y = WIN_HEIGHT;
-	
-	// Draw ceiling (above wall) 
-	y = 0;
-	while (y < start_y)
-	{
-		mlx_pixel_put(cub3D->mlx, cub3D->win, x, y,
-			create_rgb(cub3D->map->c_red, cub3D->map->c_green, cub3D->map->c_blue));
-		y++;
-	}
-	
-	// Draw wall
-	y = start_y;
-	while (y < end_y)
-	{
-		mlx_pixel_put(cub3D->mlx, cub3D->win, x, y, color);
-		y++;
-	}
-	
-	// Draw floor (below wall)
-	y = end_y;
-	while (y < WIN_HEIGHT)
-	{
-		mlx_pixel_put(cub3D->mlx, cub3D->win, x, y,
-			create_rgb(cub3D->map->f_red, cub3D->map->f_green, cub3D->map->f_blue));
-		y++;
-	}
 }

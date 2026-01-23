@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/16 23:32:23 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/23 00:11:20 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void		extract_color(char *line, int *colors)
+void	extract_color(char *line, int *colors)
 {
 	int	i;
 	int	count;
@@ -48,7 +48,8 @@ char	*config_l(int fd)
 {
 	char	*line;
 
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		if (is_config_line(line) || line[0] == '\n')
 			free(line);
@@ -57,25 +58,10 @@ char	*config_l(int fd)
 			free(line);
 			break ;
 		}
+		line = get_next_line(fd);
 	}
 	return (line);
 }
-
-//function unused for now
-// void sizem(t_cub3D *Cub3D) //size of map
-// {
-// 	int rows = Cub3D->map->conf_end;
-// 	int columns = 0;
-// 	while (Cub3D->map->copy[rows] != NULL)
-// 		rows++;
-// 	if (rows > 0)
-// 		columns = ft_strlen(Cub3D->map->copy[Cub3D->map->conf_end]) - 1;
-// 	else
-// 		columns = 0;
-// 	Cub3D->w_height = rows * TILE_SIZE;
-// 	Cub3D->w_width = columns * TILE_SIZE;
-// }
-// as we allow jagged edges,this will need to be changed,if we need the function.
 
 int	iter_rows(t_map *map, int index, int iter, bool middle)
 {
@@ -87,37 +73,30 @@ int	iter_rows(t_map *map, int index, int iter, bool middle)
 			iter++;
 		while (map->copy[index][iter] != '\n' && map->copy[index][iter] != '\0')
 		{
-			if (map->copy[index][iter] != '1' && map->copy[index][iter] != ' ') //only 1 and spaces are allowed in the first and last row
+			if (map->copy[index][iter] != '1' && map->copy[index][iter] != ' ')
 				return (0);
 			iter++;
 		}
 		return (1);
 	}
-	while (map->copy[index][iter] == ' ') //skip spaces
+	while (map->copy[index][iter] == ' ')
 		iter++;
-	if (map->copy[index][iter] != '1') //first wall of middle rows
+	if (map->copy[index][iter] != '1')
 		return (0);
-	j = ft_strlen(map->copy[index]) - 1; //find end of row
-	while (map->copy[index][j] == ' ' || map->copy[index][j] == '\n') //skip spaces or newlines
+	j = ft_strlen(map->copy[index]) - 1;
+	while (map->copy[index][j] == ' ' || map->copy[index][j] == '\n')
 		j--;
-	if (map->copy[index][j] != '1') //first non-space char has to be a 1 
+	if (map->copy[index][j] != '1')
 		return (0);
 	return (1);
 }
-char	get_map_char(t_map *map, int x, int y)
+
+void	set_texts_w(t_cub3 *cub3, int wall_height, t_ray ray)
 {
-	int	len;
-	int	actual_y;
-	
-	if (y < 0 || y >= (map->count - map->conf_end) || x < 0)
-		return ('\0');
-	actual_y = y + map->conf_end;
-	if (!map->copy[actual_y])
-		return ('\0');
-	len = ft_strlen(map->copy[actual_y]);
-	if (len > 0 && map->copy[actual_y][len - 1] == '\n')
-		len--;
-	if (x >= len)
-		return ('\0');
-	return (map->copy[actual_y][x]);
+	cub3->tmp->texture = get_wall_texture(cub3->map, ray);
+	cub3->tmp->start_y = (WIN_HEIGHT / 2) - (wall_height / 2);
+	cub3->tmp->end_y = cub3->tmp->start_y + wall_height;
+	cub3->tmp->tex_x = calculate_texture_x(ray);
+	cub3->tmp->tex_y_step = 64.0 / wall_height;
+	cub3->tmp->tex_y_pos = 0;
 }
