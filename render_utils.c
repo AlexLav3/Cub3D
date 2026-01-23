@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 01:48:46 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/23 00:11:06 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 00:50:28 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,7 @@ void	put_walls_ceiling(t_cub3 *cub3, int y, int x, int draw_end)
 	}
 }
 
-/**
- * calculate_wall_height - Calculate screen height of wall slice
- * @distance: Distance from player to wall
- * 
-
-	* Closer walls appear taller on screen.
- * We use inverse proportion: height = constant / distance
- * 
- * Returns: Height in pixels
- */
+//calculate_wall_height - Calculate screen height of wall slice
 int	calculate_wall_height(float distance)
 {
 	int	height;
@@ -56,12 +47,7 @@ int	calculate_wall_height(float distance)
 	return (height);
 }
 
-/**
- * normalize_angle - Keep angle within 0 to 2π range
- * @angle: The angle to normalize
- * 
- * Returns: Normalized angle
- */
+//normalize_angle - Keep angle within 0 to 2π range
 float	normalize_angle(float angle)
 {
 	while (angle < 0)
@@ -71,11 +57,7 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-/**
- * my_mlx_pixel_put - Fast pixel put to image buffer
- * Instead of mlx_pixel_put which updates screen immediately (slow),
- * we write directly to image memory (fast), then display once
- */
+//my_mlx_pixel_put - Fast pixel put to image buffer
 void	my_mlx_pixel_put(t_cub_img *img, int x, int y, int color)
 {
 	char	*dst;

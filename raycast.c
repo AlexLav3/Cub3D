@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 00:10:59 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/23 00:11:00 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 00:50:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/**
- * init_ray_state - Initialize ray casting state from player position
- * @player: Player position and angle
- * @ray_angle: Direction to cast this ray
- * @state: Pointer to ray state structure to initialize
- * 
- * Sets up the starting position and direction for raycasting.
- */
+//init_ray_state - Initialize ray casting state from player position
 static void	init_ray_state(t_player *player, float ray_angle,
 	t_ray_state *state)
 {
@@ -31,12 +24,7 @@ static void	init_ray_state(t_player *player, float ray_angle,
 	state->prev_map_x = (int)state->x;
 }
 
-/**
- * step_ray_forward - Advance ray position by one step along its direction
- * @state: Pointer to ray state structure
- * 
- * Moves the ray forward by RAY_STEP distance and updates the total distance.
- */
+//step_ray_forward - Advance ray position by one step along its direction
 static void	step_ray_forward(t_ray_state *state)
 {
 	state->x += state->dir_x * RAY_STEP;
@@ -44,16 +32,7 @@ static void	step_ray_forward(t_ray_state *state)
 	state->distance += RAY_STEP;
 }
 
-/**
- * update_ray_on_hit - Update ray structure when wall is hit
- * @ray: Pointer to ray structure to update
- * @ray_angle: Direction of the ray
- * @state: Pointer to ray state structure
- * @map_x: Map X coordinate where wall was hit
- * 
- * Fills in the ray structure with hit information including distance,
- * position, and whether it hit a vertical or horizontal wall.
- */
+//update_ray_on_hit - Update ray structure when wall is hit
 static void	update_ray_on_hit(t_ray *ray, float ray_angle,
 	t_ray_state *state, int map_x)
 {
@@ -67,15 +46,7 @@ static void	update_ray_on_hit(t_ray *ray, float ray_angle,
 		ray->hit_vertical = 0;
 }
 
-/**
- * check_wall_collision - Check if ray hit a wall at current position
- * @map: Game map
- * @ray: Pointer to ray structure
- * @ray_angle: Direction of the ray
- * @state: Pointer to ray state structure
- * 
- * Returns: 1 if wall was hit, 0 otherwise
- */
+//check_wall_collision - Check if ray hit a wall at current position
 static int	check_wall_collision(t_map *map, t_ray *ray, float ray_angle,
 	t_ray_state *state)
 {
@@ -93,17 +64,7 @@ static int	check_wall_collision(t_map *map, t_ray *ray, float ray_angle,
 	return (0);
 }
 
-/**
- * cast_single_ray - Cast one ray and find where it hits a wall
- * @player: Player position and angle
- * @map: Game map
- * @ray_angle: Direction to cast this ray
- * 
- * This is the core raycasting algorithm. We step forward in small increments
- * along the ray direction until we hit a wall or reach maximum depth.
- * 
- * Returns: Ray structure with hit information
- */
+//cast_single_ray - Cast one ray and find where it hits a wall
 t_ray	cast_single_ray(t_player *player, t_map *map, float ray_angle)
 {
 	t_ray			ray;

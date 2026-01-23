@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:07:14 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/24 00:25:12 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:45:56 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@
 # define MOVESPEED 0.1
 # define ROTSPEED 0.05
 
-//find the X11 equivalent later
 # define S 115
 # define D 100
 # define W 119
@@ -88,6 +87,15 @@ typedef struct s_ray
 	float				wall_x;
 	float				wall_y;
 }						t_ray;
+
+typedef struct s_dir_init
+{
+	char				dir;
+	double				dir_x;
+	double				dir_y;
+	double				plane_x;
+	double				plane_y;
+}						t_dir_init;
 
 typedef struct g_player
 {
@@ -174,6 +182,13 @@ typedef struct s_ray_state
 	int					prev_map_x;
 }						t_ray_state;
 
+static const t_dir_init	g_dirs[] = {
+	{'N', 0, -1, 0.66, 0},
+	{'S', 0, 1, -0.66, 0},
+	{'E', 1, 0, 0, 0.66},
+	{'W', -1, 0, 0, -0.66},
+};
+
 // ============================================================================
 // errors.c - Error handling and validation
 // ============================================================================
@@ -181,71 +196,49 @@ int						arg_error(int argc, char **argv);
 int						map_error(int fd);
 int						is_config_line(char *line);
 
-// ============================================================================
-// main.c - Entry point
-// ============================================================================
 int						main(int argc, char **argv);
 
-// ============================================================================
 // init.c - Initialization functions
-// ============================================================================
 int						mlx_set(t_cub3 *cub3);
 int						init_player(t_cub3 *cub3);
 void					init_player_direction(t_cub3 *cub3);
 void					set_colors(t_map *map, int op, char *line);
 
-// ============================================================================
 // init_utils.c - Player initialization utilities
-// ============================================================================
-void					player_pos_ns(t_player *player);
 int						player_found(t_cub3 *cub3, int actual_y, int x, int y);
 void					player_var(t_cub3 *cub3, int y, int x, int a_y);
 void					set_text_add(t_cub_img *texture);
 int						set_textures_col(t_map *map, int op, char *path);
 
-// ============================================================================
 // map.c - Map loading and configuration
-// ============================================================================
 int						load_map(t_map *map);
 void					create_copy(t_map *map);
 int						configs(t_map *map);
 int						walls_check(t_map *map);
 
-// ============================================================================
 // map_utils.c - Map utility functions
-// ============================================================================
 int						is_wall(t_map *map, int x, int y);
 char					get_map_char(t_map *map, int x, int y);
 
-// ============================================================================
 // utils.c - General utilities
-// ============================================================================
 void					extract_color(char *line, int *colors);
 char					*config_l(int fd);
 int						iter_rows(t_map *map, int index, int iter, bool middle);
 void					set_texts_w(t_cub3 *cub3, int wall_height, t_ray ray);
 
-// ============================================================================
 // raycast.c - Core raycasting algorithm
-// ============================================================================
 t_ray					cast_single_ray(t_player *player, t_map *map,
 							float ray_angle);
 
-// ============================================================================
 // raycast_utils.c - Raycasting utilities
-// ============================================================================
 void					draw_vertical_line(t_cub3 *cub3, int x, int wall_height,
 							int color);
 
-// ============================================================================
 // colors.c - Color manipulation functions
-// ============================================================================
 int						create_rgb(int r, int g, int b);
 int						get_wall_color(t_ray ray);
 
-// ============================================================================
 // render.c - Main rendering functions
-// ============================================================================
 void					render_3d_view(t_cub3 *cub3, int x);
 int						get_texture_color(t_cub_img *texture, int tex_x,
 							int tex_y);
@@ -254,9 +247,7 @@ int						calculate_texture_x(t_ray ray);
 void					draw_textured_wall(t_cub3 *cub3, int x, int wall_height,
 							t_ray ray);
 
-// ============================================================================
 // render_utils.c - Rendering utilities
-// ============================================================================
 void					put_walls_ceiling(t_cub3 *cub3, int y, int x,
 							int draw_end);
 int						calculate_wall_height(float distance);
@@ -264,23 +255,17 @@ float					normalize_angle(float angle);
 void					my_mlx_pixel_put(t_cub_img *img, int x, int y,
 							int color);
 
-// ============================================================================
 // win_actions.c - Window and input handling
-// ============================================================================
 int						ft_key_press(int keycode, void *v);
 int						ft_close(void *param);
 int						ft_key_release(int keycode, void *v);
 
-// ============================================================================
 // p_movement_1.c - Player movement
-// ============================================================================
 int						validate_move(t_cub3 *cub3, float new_x, float new_y);
 int						move_player(t_cub3 *cub3);
 int						rotate_player(t_cub3 *cub3, float rotdir);
 
-// ============================================================================
 // clean.c - Cleanup and memory management
-// ============================================================================
 void					clean_imgs(t_cub3 *cub3);
 void					map_errfree(char **map, int fd, int y);
 

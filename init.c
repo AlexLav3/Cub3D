@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:25:24 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:29:01 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,21 @@
 
 void	init_player_direction(t_cub3 *cub3)
 {
-	t_player	*p;
+	t_player	*p = cub3->player;
+	int			i;
 
-	p = cub3->player;
-	if (p->dir == 'N' || p->dir == 'S')
-		player_pos_ns(p);
-	else if (p->dir == 'E')
+	i = 0;
+	while (i < 4)
 	{
-		p->dir_x = 1;
-		p->dir_y = 0;
-		p->plane_x = 0;
-		p->plane_y = 0.66;
-	}
-	else if (p->dir == 'W')
-	{
-		p->dir_x = -1;
-		p->dir_y = 0;
-		p->plane_x = 0;
-		p->plane_y = -0.66;
+		if (g_dirs[i].dir == p->dir)
+		{
+			p->dir_x = g_dirs[i].dir_x;
+			p->dir_y = g_dirs[i].dir_y;
+			p->plane_x = g_dirs[i].plane_x;
+			p->plane_y = g_dirs[i].plane_y;
+			return;
+		}
+		i++;
 	}
 }
 

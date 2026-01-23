@@ -3,26 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:40:00 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/23 00:07:38 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 00:47:42 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/**
- * check_map_position_is_wall - Check if a map position contains a wall
- * @map: The game map structure
- * @x: X coordinate in map grid
- * @y: Y coordinate in map grid
- * 
- * Validates coordinates and checks if the position contains a wall ('1').
- * Returns 1 for walls or out-of-bounds, 0 for empty space.
- * 
- * Returns: 1 if wall or invalid position, 0 if empty space
- */
 int	is_wall(t_map *map, int x, int y)
 {
 	int	actual_y;
@@ -41,14 +30,6 @@ int	is_wall(t_map *map, int x, int y)
 	return (map->copy[actual_y][x] == '1');
 }
 
-/**
- * get_map_char - Get character at specific map coordinates
- * @map: Game map structure
- * @x: X coordinate in map grid
- * @y: Y coordinate in map grid
- * 
- * Returns: Character at position, or '\0' if out of bounds
- */
 char	get_map_char(t_map *map, int x, int y)
 {
 	int	len;

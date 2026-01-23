@@ -3,23 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycast_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:35:00 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/23 00:10:45 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 00:49:30 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/**
- * calculate_wall_draw_bounds - Calculate start and end Y for wall drawing
- * @wall_height: Height of wall to draw in pixels
- * @start_y: Pointer to store start Y coordinate
- * @end_y: Pointer to store end Y coordinate
- * 
- * Centers the wall vertically and clamps to screen bounds.
- */
+// calculate_wall_draw_bounds - Calculate start and end Y for wall drawing
 static void	calculate_wall_draw_bounds(int wall_height, int *start_y,
 	int *end_y)
 {
@@ -31,16 +24,7 @@ static void	calculate_wall_draw_bounds(int wall_height, int *start_y,
 		*end_y = WIN_HEIGHT;
 }
 
-/**
- * draw_wall_slice - Draw one vertical stripe of the wall
- * @cub3: Main game structure
- * @x: Screen X coordinate (column)
- * @wall_height: Height of wall to draw
- * @color: Color of the wall
- * 
- * Draws one vertical slice of wall, centered on screen, with ceiling
- * and floor filled around it.
- */
+// draw_wall_slice - Draw one vertical stripe of the wall
 void	draw_vertical_line(t_cub3 *cub3, int x, int wall_height, int color)
 {
 	int	y;

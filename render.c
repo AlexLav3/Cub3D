@@ -6,19 +6,14 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 07:29:25 by javi              #+#    #+#             */
-/*   Updated: 2026/01/23 23:28:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:51:13 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-/**
- * get_texture_color - Sample a color from a texture at given coordinates
- * @texture: The texture image to sample from
- * @tex_x: X coordinate in texture (0-63)
- * @tex_y: Y coordinate in texture (0-63)
- * Returns: RGB color from texture
- */
+
+//get_texture_color - Sample a color from a texture at given coordinates
 int	get_texture_color(t_cub_img *texture, int tex_x, int tex_y)
 {
 	char	*pixel;
@@ -38,14 +33,8 @@ int	get_texture_color(t_cub_img *texture, int tex_x, int tex_y)
 	return (*(unsigned int *)pixel);
 }
 
-/**
- * get_wall_texture - Determine which texture to use based on wall hit
- * @map: Game map with loaded textures
- * @ray: Ray that hit the wall
- * @player_angle: Player's viewing angle
- * 
- * Returns: Pointer to the appropriate texture
- */
+
+//get_wall_texture - Determine which texture to use based on wall hit
 t_cub_img	*get_wall_texture(t_map *map, t_ray ray)
 {
 	if (ray.hit_vertical)
@@ -64,12 +53,8 @@ t_cub_img	*get_wall_texture(t_map *map, t_ray ray)
 	}
 }
 
-/**
- * calculate_texture_x - Calculate X coordinate in texture
- * @ray: Ray that hit the wall
- * 
- * Returns: X coordinate in texture (0-63)
- */
+
+//calculate_texture_x - Calculate X coordinate in texture
 int	calculate_texture_x(t_ray ray)
 {
 	float	wall_hit_pos;
@@ -88,11 +73,7 @@ int	calculate_texture_x(t_ray ray)
 	return (tex_x);
 }
 
-/**
- * draw_textured_wall - Draw one vertical stripe with texture
- * 
- * P.s. variables moved to a struct with a temporary name (t_tmp), Iidk how
- */
+//draw_textured_wall - Draw one vertical stripe with texture
 void	draw_textured_wall(t_cub3 *cub3, int x, int wall_height, t_ray ray)
 {
 	int					y;
@@ -121,16 +102,7 @@ void	draw_textured_wall(t_cub3 *cub3, int x, int wall_height, t_ray ray)
 	put_walls_ceiling(cub3, cub3->tmp->end_y, x, WIN_HEIGHT);
 }
 
-/**
- * render_3d_view - Main rendering function that casts rays and draws the scene
- * @cub3: Main game structure
- * 
- * This function:
- * 1. Casts one ray per screen column (800 rays for 800 pixel width)
- * 2. Calculates the angle for each ray relative to player's view
- * 3. Draws each wall slice based on distance
-	- does it also change which slice of the texture?
- */
+//render_3d_view - Main rendering function that casts rays and draws the scene
 void	render_3d_view(t_cub3 *cub3, int x)
 {
 	t_ray		ray;

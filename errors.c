@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 03:28:18 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/23 00:10:22 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 00:40:16 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	map_error(int fd)
 
 	error = 0;
 	line = config_l(fd);
-	line = get_next_line(fd);
-	while (line)
+	while ((line = get_next_line(fd)))
 	{
 		i = 0;
 		while (line[i])
@@ -50,7 +49,6 @@ int	map_error(int fd)
 			i++;
 		}
 		free(line);
-		line = get_next_line(fd);
 	}
 	if (close(fd))
 		perror("close");

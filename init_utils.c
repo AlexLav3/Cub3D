@@ -6,29 +6,11 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 03:05:53 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:17:39 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:42:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	player_pos_ns(t_player *player)
-{
-	if (player->dir == 'N')
-	{
-		player->dir_x = 0;
-		player->dir_y = -1;
-		player->plane_x = 0.66;
-		player->plane_y = 0;
-	}
-	else if (player->dir == 'S')
-	{
-		player->dir_x = 0;
-		player->dir_y = 1;
-		player->plane_x = -0.66;
-		player->plane_y = 0;
-	}
-}
 
 int	player_found(t_cub3 *cub3, int actual_y, int x, int y)
 {
@@ -75,8 +57,6 @@ int	set_textures_col(t_map *map, int op, char *path)
 		texture = &map->e_text;
 	else if (op == WT)
 		texture = &map->w_text;
-	else
-		return (1);
 	texture->img = mlx_xpm_file_to_image(map->cub3->mlx, path, &width, &height);
 	if (!texture->img)
 		return (printf("failed to load texture from '%s'\n", path), 0);
