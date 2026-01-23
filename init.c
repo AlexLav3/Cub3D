@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:13:19 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:25:24 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	mlx_set(t_cub3 *cub3)
 			&cub3->img.bits_per_pixel, &cub3->img.line_len,
 			&cub3->img.endian);
 	if (!configs(cub3->map))
-		return (clean_notxt(cub3), 0);
+		return (ft_close(cub3), 0);
 	if (!walls_check(cub3->map))
 		return (printf("Not enclosed by walls\n"), ft_close(cub3), 0);
 	if (!init_player(cub3))

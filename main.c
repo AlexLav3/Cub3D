@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:30 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/23 23:45:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:17:03 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 
 	if (arg_error(argc, argv))
 		return (0);
-	tmap = malloc(sizeof(t_map));
+	tmap = calloc(1, sizeof(t_map));
 	if (!tmap)
 		return (1);
 	cub3.mlx = mlx_init(&cub3);

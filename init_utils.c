@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 03:05:53 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:01:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:17:39 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	set_textures_col(t_map *map, int op, char *path)
 	width = 64;
 	height = 64;
 	len = ft_strlen(path);
-	while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == ' ' || path[len
-				- 1] == '\t'))
+	while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == ' ' || path[len- 1] == '\t'))
 		path[--len] = '\0';
 	if (op == NT)
 		texture = &map->n_text;

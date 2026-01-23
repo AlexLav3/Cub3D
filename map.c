@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/23 23:59:53 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:19:18 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,17 +131,15 @@ int	load_map(t_map *map)
 
 	count = 0;
 	fd = open(map->file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
+	while ((line = get_next_line(fd)))
 	{
 		count++;
 		free(line);
-		line = get_next_line(fd);
 	}
 	if (close(fd))
 		perror("close");
 	map->count = count;
-	map->copy = malloc((count + 1) * sizeof(char *));
+	map->copy = calloc(1, (count + 1) * sizeof(char *));
 	if (!map->copy)
 		return (0);
 	create_copy(map);

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:07:14 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/23 23:55:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:25:12 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,5 @@ int						rotate_player(t_cub3 *cub3, float rotdir);
 // ============================================================================
 void					clean_imgs(t_cub3 *cub3);
 void					map_errfree(char **map, int fd, int y);
-void					clean_notxt(t_cub3 *cub3);
 
 #endif
