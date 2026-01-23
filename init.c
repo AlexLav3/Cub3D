@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:01:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:13:19 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	mlx_set(t_cub3 *cub3)
 	if (!walls_check(cub3->map))
 		return (printf("Not enclosed by walls\n"), ft_close(cub3), 0);
 	if (!init_player(cub3))
-		return (0);
+		return (ft_close(cub3), 0);
 	init_player_direction(cub3);
 	render_3d_view(cub3, 0);
 	mlx_hook(cub3->win, 17, 0, ft_close, (void *)cub3);
