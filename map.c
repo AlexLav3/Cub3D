@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 22:05:57 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:19:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 01:03:43 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	create_copy(t_map *map)
 		perror("close");
 }
 
-int	walls_check(t_map *map)
+bool	walls_check(t_map *map)
 {
 	int	rows;
 	int	middle;
@@ -123,7 +123,7 @@ int	walls_check(t_map *map)
 	return (1);
 }
 
-int	load_map(t_map *map)
+bool	load_map(t_map *map)
 {
 	int		fd;
 	char	*line;

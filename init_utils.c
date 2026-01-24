@@ -6,13 +6,13 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 03:05:53 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:42:32 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 01:04:10 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	player_found(t_cub3 *cub3, int actual_y, int x, int y)
+bool	player_found(t_cub3 *cub3, int actual_y, int x, int y)
 {
 	return ((cub3->map->copy[actual_y][x] == 'N'
 		|| cub3->map->copy[actual_y][x] == 'S'
@@ -37,7 +37,7 @@ void	set_text_add(t_cub_img *texture)
 	}
 }
 
-int	set_textures_col(t_map *map, int op, char *path)
+bool	set_textures_col(t_map *map, int op, char *path)
 {
 	int			width;
 	int			height;

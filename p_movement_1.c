@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   p_movement_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 10:40:43 by javi              #+#    #+#             */
-/*   Updated: 2026/01/23 00:10:42 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 01:02:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	validate_move(t_cub3 *cub3, float new_x, float new_y)
+bool	validate_move(t_cub3 *cub3, float new_x, float new_y)
 {
-	int	moved;
+	bool	moved;
 
-	moved = 0;
+	moved = false;
 	if (!is_wall(cub3->map, (int)new_x, (int)cub3->player->pos_y))
 	{
 		cub3->player->pos_x = new_x;
-		moved = 1;
+		moved = true;
 	}
 	if (!is_wall(cub3->map, (int)cub3->player->pos_x, (int)new_y))
 	{
 		cub3->player->pos_y = new_y;
-		moved = 1;
+		moved = true;
 	}
 	return (moved);
 }

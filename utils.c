@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
+/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/22 18:52:05 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/23 00:11:20 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/01/24 00:57:32 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*config_l(int fd)
 	return (line);
 }
 
-int	iter_rows(t_map *map, int index, int iter, bool middle)
+bool	iter_rows(t_map *map, int index, int iter, bool middle)
 {
 	int	j;
 

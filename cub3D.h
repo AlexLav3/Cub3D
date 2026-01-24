@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:07:14 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/24 00:45:56 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 01:04:14 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,32 +189,30 @@ static const t_dir_init	g_dirs[] = {
 	{'W', -1, 0, 0, -0.66},
 };
 
-// ============================================================================
 // errors.c - Error handling and validation
-// ============================================================================
-int						arg_error(int argc, char **argv);
-int						map_error(int fd);
+bool					arg_error(int argc, char **argv);
+bool					map_error(int fd);
 int						is_config_line(char *line);
 
 int						main(int argc, char **argv);
 
 // init.c - Initialization functions
-int						mlx_set(t_cub3 *cub3);
-int						init_player(t_cub3 *cub3);
+bool					mlx_set(t_cub3 *cub3);
+bool					init_player(t_cub3 *cub3);
 void					init_player_direction(t_cub3 *cub3);
 void					set_colors(t_map *map, int op, char *line);
 
 // init_utils.c - Player initialization utilities
-int						player_found(t_cub3 *cub3, int actual_y, int x, int y);
+bool					player_found(t_cub3 *cub3, int actual_y, int x, int y);
 void					player_var(t_cub3 *cub3, int y, int x, int a_y);
 void					set_text_add(t_cub_img *texture);
-int						set_textures_col(t_map *map, int op, char *path);
+bool					set_textures_col(t_map *map, int op, char *path);
 
 // map.c - Map loading and configuration
-int						load_map(t_map *map);
+bool					load_map(t_map *map);
 void					create_copy(t_map *map);
 int						configs(t_map *map);
-int						walls_check(t_map *map);
+bool					walls_check(t_map *map);
 
 // map_utils.c - Map utility functions
 int						is_wall(t_map *map, int x, int y);
@@ -223,7 +221,7 @@ char					get_map_char(t_map *map, int x, int y);
 // utils.c - General utilities
 void					extract_color(char *line, int *colors);
 char					*config_l(int fd);
-int						iter_rows(t_map *map, int index, int iter, bool middle);
+bool					iter_rows(t_map *map, int index, int iter, bool middle);
 void					set_texts_w(t_cub3 *cub3, int wall_height, t_ray ray);
 
 // raycast.c - Core raycasting algorithm
@@ -261,7 +259,7 @@ int						ft_close(void *param);
 int						ft_key_release(int keycode, void *v);
 
 // p_movement_1.c - Player movement
-int						validate_move(t_cub3 *cub3, float new_x, float new_y);
+bool					validate_move(t_cub3 *cub3, float new_x, float new_y);
 int						move_player(t_cub3 *cub3);
 int						rotate_player(t_cub3 *cub3, float rotdir);
 

@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 03:28:18 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:40:16 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 00:59:25 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	valid_map_char(char c)
 		|| c == ' ' || c == '\n' || c == '\t');
 }
 
-int	map_error(int fd)
+bool	map_error(int fd)
 {
 	char	*line;
 	int		i;
@@ -53,24 +53,24 @@ int	map_error(int fd)
 	if (close(fd))
 		perror("close");
 	if (error)
-		return (printf("wrong char in file\n"), 1);
-	return (0);
+		return (printf("wrong char in file\n"), true);
+	return (false);
 }
 
-int	arg_error(int argc, char **argv)
+bool	arg_error(int argc, char **argv)
 {
 	int		fd;
 	char	*point;
 
 	if (argc != 2)
-		return (printf("wrong number of args\n"), 1);
+		return (printf("wrong number of args\n"), true);
 	point = ft_strrchr(argv[1], '.');
 	if (!point || ft_strncmp(point, ".cub", 4) != 0)
-		return (printf("wrong extension\n"), 1);
+		return (printf("wrong extension\n"), true);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		return (printf("could not open file\n"), 1);
+		return (printf("could not open file\n"), true);
 	if (map_error(fd))
-		return (1);
-	return (0);
+		return (true);
+	return (false);
 }

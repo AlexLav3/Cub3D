@@ -6,7 +6,7 @@
 /*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/21 18:24:35 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:29:01 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/01/24 01:01:09 by elavrich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	scan_map_row_for_player(t_cub3 *cub3, int y, int a_y, int *count)
 	return (1);
 }
 
-int	init_player(t_cub3 *cub3)
+bool	init_player(t_cub3 *cub3)
 {
 	int	y;
 	int	a_y;
@@ -73,30 +73,30 @@ int	init_player(t_cub3 *cub3)
 	return (1);
 }
 
-int	mlx_set(t_cub3 *cub3)
+bool	mlx_set(t_cub3 *cub3)
 {
 	cub3->win = mlx_new_window(cub3->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3");
 	if (!cub3->win)
-		return (0);
+		return (false);
 	cub3->img.img = mlx_new_image(cub3->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!cub3->img.img)
-		return (0);
+		return (false);
 	cub3->img.addr = mlx_get_data_addr(cub3->img.img,
 			&cub3->img.bits_per_pixel, &cub3->img.line_len,
 			&cub3->img.endian);
 	if (!configs(cub3->map))
-		return (ft_close(cub3), 0);
+		return (ft_close(cub3), false);
 	if (!walls_check(cub3->map))
-		return (printf("Not enclosed by walls\n"), ft_close(cub3), 0);
+		return (printf("Not enclosed by walls\n"), ft_close(cub3), false);
 	if (!init_player(cub3))
-		return (ft_close(cub3), 0);
+		return (ft_close(cub3), false);
 	init_player_direction(cub3);
 	render_3d_view(cub3, 0);
 	mlx_hook(cub3->win, 17, 0, ft_close, (void *)cub3);
 	mlx_hook(cub3->win, 2, 1L << 0, ft_key_press, (void *)cub3);
 	mlx_hook(cub3->win, 3, 1L << 1, ft_key_release, (void *)cub3);
 	mlx_loop(cub3->mlx);
-	return (1);
+	return (true);
 }
 
 void	set_colors(t_map *map, int op, char *line)
