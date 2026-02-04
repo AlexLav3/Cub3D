@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:07:14 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/23 23:55:18 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/02/04 17:33:51 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void					set_colors(t_map *map, int op, char *line);
 // init_utils.c - Player initialization utilities
 // ============================================================================
 void					player_pos_ns(t_player *player);
-int						player_found(t_cub3 *cub3, int actual_y, int x, int y);
+int						player_found(t_cub3 *cub3, int actual_y, int x);
 void					player_var(t_cub3 *cub3, int y, int x, int a_y);
 void					set_text_add(t_cub_img *texture);
 int						set_textures_col(t_map *map, int op, char *path);

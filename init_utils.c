@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 03:05:53 by elavrich          #+#    #+#             */
-/*   Updated: 2026/01/24 00:01:07 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/02/04 17:33:08 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	player_pos_ns(t_player *player)
 	}
 }
 
-int	player_found(t_cub3 *cub3, int actual_y, int x, int y)
+int	player_found(t_cub3 *cub3, int actual_y, int x)
 {
 	return ((cub3->map->copy[actual_y][x] == 'N'
 		|| cub3->map->copy[actual_y][x] == 'S'
