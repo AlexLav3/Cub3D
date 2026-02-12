@@ -1,0 +1,12 @@
+NO ./test_maps/textures/north.xpm
+SO ./test_maps/textures/south.xpm
+WE ./test_maps/textures/west.xpm
+EA ./test_maps/textures/east.xpm
+
+F 300,100,0
+C 225,30,0
+
+1111111
+1000001
+1000N01
+1111111

@@ -6,7 +6,7 @@
 /*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 00:10:59 by jcouto            #+#    #+#             */
-/*   Updated: 2026/01/23 00:11:00 by jcouto           ###   ########.fr       */
+/*   Updated: 2026/02/12 07:17:50 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	init_ray_state(t_player *player, float ray_angle,
 	state->dir_x = cos(ray_angle);
 	state->dir_y = sin(ray_angle);
 	state->distance = 0;
-	state->prev_map_x = (int)state->x;
+	state->prev_map_x = (int)floor(state->x);
+	state->prev_map_y = (int)floor(state->y);
 }
 
 /**
@@ -82,14 +83,25 @@ static int	check_wall_collision(t_map *map, t_ray *ray, float ray_angle,
 	int	map_x;
 	int	map_y;
 
-	map_x = (int)state->x;
-	map_y = (int)state->y;
-	if (is_wall(map, map_x, map_y))
+	map_x = (int)floor(state->x);
+	map_y = (int)floor(state->y);
+if (is_wall(map, map_x, map_y))
+	{
+		update_ray_on_hit(ray, ray_angle, state, map_x);
+		return (1);
+	}
+	if (state->prev_map_x != map_x && is_wall(map, state->prev_map_x, map_y))
+	{
+		update_ray_on_hit(ray, ray_angle, state, state->prev_map_x);
+		return (1);
+	}
+	if (state->prev_map_y != map_y && is_wall(map, map_x, state->prev_map_y))
 	{
 		update_ray_on_hit(ray, ray_angle, state, map_x);
 		return (1);
 	}
 	state->prev_map_x = map_x;
+	state->prev_map_y = map_y;
 	return (0);
 }
 

@@ -1,0 +1,10 @@
+SO cub3d_tests/textures/south.xpm
+WE cub3d_tests/textures/west.xpm
+EA cub3d_tests/textures/east.xpm
+F 220,100,0
+C 225,30,0
+
+1111111
+1000001
+1000N01
+1111111

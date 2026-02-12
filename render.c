@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elavrich <elavrich@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcouto <jcouto@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 07:29:25 by javi              #+#    #+#             */
-/*   Updated: 2026/01/23 23:28:14 by elavrich         ###   ########.fr       */
+/*   Updated: 2026/02/12 07:59:45 by jcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	draw_textured_wall(t_cub3 *cub3, int x, int wall_height, t_ray ray)
 		cub3->tmp->end_y = WIN_HEIGHT;
 	put_walls_ceiling(cub3, 0, x, cub3->tmp->start_y);
 	y = cub3->tmp->start_y;
-	while (y < cub3->tmp->end_y)
+	while (y <= cub3->tmp->end_y)
 	{
 		cub3->tmp->tex_y = (int)cub3->tmp->tex_y_pos;
 		cub3->tmp->color = get_texture_color(cub3->tmp->texture,
