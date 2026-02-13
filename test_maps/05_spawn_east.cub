@@ -1,7 +1,7 @@
-NO ./test_maps/textures/north.xpm
-SO ./test_maps/textures/south.xpm
-WE ./test_maps/textures/west.xpm
-EA ./test_maps/textures/east.xpm
+NO ./textures/North.xpm
+SO ./textures/South.xpm
+WE ./textures/West.xpm
+EA ./textures/East.xpm
 
 F 220,100,0
 C 225,30,0
